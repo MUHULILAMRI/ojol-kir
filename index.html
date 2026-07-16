@@ -1,140 +1,353 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ojol KIR & Finance</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
-        rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f4f7f6;
-            max-width: 480px;
-            margin: 0 auto;
-            min-height: 100vh;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="Aplikasi manajemen keuangan dan kelayakan motor untuk pengemudi ojek online">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="OjolKIR">
+  <title>OjolKIR — Manajemen Ojol</title>
 
-        .app-navbar {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-        }
+  <!-- Manifest PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 
-        .card-custom {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-        }
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        .btn-custom-primary {
-            background-color: #10b981;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-        }
-
-        .tracking-box {
-            background-color: #f8fafc;
-            border: 2px dashed #e2e8f0;
-            border-radius: 14px;
-        }
-    </style>
+  <!-- Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="assets/css/app.css" rel="stylesheet">
 </head>
-
 <body>
 
-    <nav class="navbar app-navbar navbar-dark py-3 px-3 shadow-sm">
-        <div class="container-fluid"><span class="navbar-brand fw-bold text-white fs-5">Ojol<span
-                    class="text-success">KIR</span></span></div>
-    </nav>
+<!-- ===== TOP NAVBAR ===== -->
+<nav id="topNav">
+  <span class="nav-logo">Ojol<span>KIR</span></span>
+  <div class="net-badge">
+    <span class="net-dot" id="netDot"></span>
+    <span id="netTxt">Online</span>
+  </div>
+</nav>
 
-    <div class="container px-3 mt-3 mb-5">
-        <div class="card card-custom bg-white p-3 mb-3">
-            <h6 class="text-muted fw-bold small mb-3">RINGKASAN BULAN INI</h6>
-            <div class="row text-center">
-                <div class="col-4 border-end"><span class="text-muted d-block small"
-                        style="font-size: 0.7rem;">Pendapatan</span><span class="fw-bold text-success small"
-                        id="totalPendapatan">Rp 0</span></div>
-                <div class="col-4 border-end"><span class="text-muted d-block small"
-                        style="font-size: 0.7rem;">Pengeluaran</span><span class="fw-bold text-danger small"
-                        id="totalPengeluaran">Rp 0</span></div>
-                <div class="col-4"><span class="text-muted d-block small" style="font-size: 0.7rem;">Bersih</span><span
-                        class="fw-bold text-primary small" id="totalBersih">Rp 0</span></div>
-            </div>
-        </div>
+<!-- ===================================================================
+     PAGE 1: DASHBOARD
+===================================================================== -->
+<div id="page-dashboard" class="page">
+  <div class="page-pad">
 
-        <div class="card card-custom text-white mb-3 shadow-sm" id="panelKIR"
-            style="background: linear-gradient(135deg, #059669, #10b981);">
-            <div class="card-body">
-                <h6 class="small opacity-75 mb-1">STATUS KELAYAKAN MOTOR</h6>
-                <p class="mb-0 fw-bold fs-5" id="statusMotorTxt">Memuat status...</p>
-            </div>
-        </div>
-
-        <div class="card card-custom bg-white p-4">
-            <form id="formOperasional">
-                <div class="mb-3"><label class="form-label small fw-bold">Tanggal</label><input type="date"
-                        class="form-control" id="tanggal" required></div>
-                <div class="mb-3"><label class="form-label small fw-bold">Pendapatan Kotor (Rp)</label><input
-                        type="number" class="form-control" id="pendapatan" required></div>
-                <div class="row mb-3">
-                    <div class="col-6"><label class="form-label small fw-bold">Bensin</label><input type="number"
-                            class="form-control" id="bensin"></div>
-                    <div class="col-6"><label class="form-label small fw-bold">Parkir/Makan</label><input type="number"
-                            class="form-control" id="lain_lain"></div>
-                </div>
-                <div class="mb-4 p-3 tracking-box">
-                    <button type="button" class="btn btn-sm btn-primary w-100 mb-2" onclick="catatLokasiAwal()">START
-                        SHIFT</button>
-                    <button type="button" class="btn btn-sm btn-danger w-100" onclick="catatLokasiAkhir()">END
-                        SHIFT</button>
-                    <input type="number" class="form-control mt-2" id="jarak_tempuh" placeholder="Jarak (KM)" readonly>
-                </div>
-                <button type="submit" class="btn btn-custom-primary w-100 py-3">SIMPAN DATA</button>
-            </form>
-        </div>
+    <!-- Install Banner (hidden by default) -->
+    <div class="install-banner hidden" id="installBanner">
+      <div>
+        <h4>📱 Install Aplikasi</h4>
+        <p>Bisa dibuka seperti app native!</p>
+      </div>
+      <button class="install-btn" onclick="installApp()">Install</button>
     </div>
 
-    <script>
-        document.getElementById('tanggal').valueAsDate = new Date();
-        const API_URL = "https://ojol-kir.page.gd/api"; // URL Hosting Anda
+    <!-- Greeting -->
+    <div class="greeting-card">
+      <div class="greeting-text">
+        <h2 id="greeting">Selamat Datang 👋</h2>
+        <p id="currentDate">Memuat tanggal...</p>
+      </div>
+      <div class="greeting-emoji">🏍️</div>
+    </div>
 
-        function muatDataDashboard() {
-            fetch(API_URL + '/get_dashboard.php')
-                .then(res => res.json())
-                .then(res => {
-                    if (res.status === 'success') {
-                        document.getElementById('totalPendapatan').innerText = res.data.pendapatan;
-                        document.getElementById('totalPengeluaran').innerText = res.data.pengeluaran;
-                        document.getElementById('totalBersih').innerText = res.data.bersih;
-                        document.getElementById('statusMotorTxt').innerText = res.data.status_motor;
-                    }
-                });
-        }
+    <!-- Summary Bulan Ini -->
+    <div class="card">
+      <div class="card-body-sm">
+        <div class="section-head">
+          <span class="section-title">Ringkasan Bulan Ini</span>
+        </div>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="s-label">Pendapatan</span>
+            <span class="s-val text-success" id="totalPendapatan">Rp 0</span>
+          </div>
+          <div class="summary-item">
+            <span class="s-label">Pengeluaran</span>
+            <span class="s-val text-danger" id="totalPengeluaran">Rp 0</span>
+          </div>
+          <div class="summary-item">
+            <span class="s-label">Bersih</span>
+            <span class="s-val text-blue" id="totalBersih">Rp 0</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        document.getElementById('formOperasional').addEventListener('submit', function (e) {
-            e.preventDefault();
-            let payload = {
-                tanggal: document.getElementById('tanggal').value,
-                pendapatan: document.getElementById('pendapatan').value,
-                bensin: document.getElementById('bensin').value,
-                lain_lain: document.getElementById('lain_lain').value,
-                jarak: document.getElementById('jarak_tempuh').value
-            };
-            fetch(API_URL + '/proses_data.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).then(() => { alert("Data tersimpan!"); muatDataDashboard(); });
-        });
+    <!-- KIR Panel -->
+    <div class="kir-panel success" id="kirPanel">
+      <div class="kir-label">STATUS KELAYAKAN MOTOR</div>
+      <div class="kir-status" id="kirStatus">Memuat status...</div>
+      <div class="kir-sub" id="kirSub">Mengambil data odometer...</div>
+    </div>
 
-        window.onload = muatDataDashboard;
-    </script>
+    <!-- KPI Mini Grid -->
+    <div class="kpi-mini-grid">
+      <div class="kpi-mini">
+        <div class="kpi-mini-icon">📈</div>
+        <div class="kpi-mini-val text-blue" id="avgHarian">Rp 0</div>
+        <div class="kpi-mini-label">Rata-rata / hari</div>
+      </div>
+      <div class="kpi-mini">
+        <div class="kpi-mini-icon">🎯</div>
+        <div class="kpi-mini-val text-success" id="proyeksi">Rp 0</div>
+        <div class="kpi-mini-label">Proyeksi bulan ini</div>
+      </div>
+    </div>
+
+    <!-- Mini Chart 7 Hari -->
+    <div class="card">
+      <div class="card-body">
+        <span class="section-label">📊 Pendapatan 7 Hari Terakhir</span>
+        <div class="chart-wrap">
+          <canvas id="miniChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sisa KM Servis -->
+    <div class="card" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid var(--border)">
+      <div class="card-body" style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">🔧 Servis Berikutnya</div>
+          <div style="font-size:1.1rem;font-weight:800;color:var(--text-primary)" id="sisaServis">--- KM lagi</div>
+        </div>
+        <div style="font-size:2rem;opacity:.3">⚙️</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     PAGE 2: INPUT HARIAN
+===================================================================== -->
+<div id="page-input" class="page">
+  <div class="page-pad">
+
+    <div class="card">
+      <div class="card-body">
+        <div class="section-head" style="margin-bottom:14px">
+          <span class="section-title">📝 Input Operasional Harian</span>
+        </div>
+
+        <form id="formOperasional">
+
+          <!-- Tanggal -->
+          <div class="form-group">
+            <label class="form-lbl">Tanggal Kerja</label>
+            <input type="date" class="form-ctrl" id="tanggal" required>
+          </div>
+
+          <!-- Pendapatan -->
+          <div class="form-group">
+            <label class="form-lbl">💰 Total Pendapatan Kotor (Rp)</label>
+            <input type="number" class="form-ctrl income-input" id="pendapatan"
+              placeholder="0" inputmode="numeric" required>
+          </div>
+
+          <!-- Pengeluaran -->
+          <div class="form-group">
+            <label class="form-lbl">Pengeluaran Operasional</label>
+            <div class="form-row-3">
+              <div>
+                <div style="font-size:.6rem;font-weight:600;color:var(--text-muted);margin-bottom:5px">⛽ Bensin</div>
+                <input type="number" class="form-ctrl" id="bensin" placeholder="0" inputmode="numeric">
+              </div>
+              <div>
+                <div style="font-size:.6rem;font-weight:600;color:var(--text-muted);margin-bottom:5px">🍚 Parkir/Makan</div>
+                <input type="number" class="form-ctrl" id="lain_lain" placeholder="0" inputmode="numeric">
+              </div>
+              <div>
+                <div style="font-size:.6rem;font-weight:600;color:var(--text-muted);margin-bottom:5px">🔧 Servis</div>
+                <input type="number" class="form-ctrl" id="servis" placeholder="0" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+
+          <!-- GPS Tracking -->
+          <div class="form-group">
+            <label class="form-lbl">📍 Smart Tracking Jarak</label>
+            <div class="tracking-box">
+              <div class="tracking-head">
+                <i class="fas fa-satellite-dish"></i> GPS Shift Tracker
+              </div>
+              <div class="tracking-btns">
+                <button type="button" id="btnStart" class="btn btn-primary btn-sm"
+                  onclick="catatLokasiAwal()">
+                  <i class="fas fa-play"></i> START
+                </button>
+                <button type="button" id="btnEnd" class="btn btn-danger btn-sm"
+                  onclick="catatLokasiAkhir()">
+                  <i class="fas fa-stop"></i> END
+                </button>
+              </div>
+              <div class="tracking-result">
+                <span class="tr-label"><i class="fas fa-road"></i> Jarak</span>
+                <input type="number" step="0.01" id="jarak_tempuh" placeholder="0.00" readonly>
+                <span style="font-size:.75rem;font-weight:700;color:var(--text-muted)">KM</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div class="preview-card" id="previewCard">
+            <div style="font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--primary-dark);margin-bottom:8px">
+              ✅ Ringkasan
+            </div>
+            <div class="preview-row">
+              <span class="pr-label">Pendapatan</span>
+              <span class="pr-val text-success" id="prevPend">Rp 0</span>
+            </div>
+            <div class="preview-row">
+              <span class="pr-label">Total Pengeluaran</span>
+              <span class="pr-val text-danger" id="prevOut">Rp 0</span>
+            </div>
+            <div class="preview-row">
+              <span class="pr-label">Pendapatan Bersih</span>
+              <span class="pr-val pr-bersih text-success" id="prevBersih">Rp 0</span>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg btn-block">
+            <i class="fas fa-save"></i> SIMPAN DATA HARIAN
+          </button>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     PAGE 3: RIWAYAT
+===================================================================== -->
+<div id="page-riwayat" class="page">
+  <div class="page-pad">
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <select class="filter-sel" id="filterBulan"></select>
+      <select class="filter-sel" id="filterTahun"></select>
+    </div>
+
+    <!-- Summary Bulan -->
+    <div class="riwayat-summary">
+      <div class="rs-item">
+        <span class="rs-label">Pendapatan</span>
+        <span class="rs-val" id="rsPend">Rp 0</span>
+      </div>
+      <div class="rs-item">
+        <span class="rs-label">Bersih</span>
+        <span class="rs-val" id="rsBersih">Rp 0</span>
+      </div>
+      <div class="rs-item">
+        <span class="rs-label">Hari Kerja</span>
+        <span class="rs-val" id="rsHari">0 hari</span>
+      </div>
+    </div>
+
+    <!-- List -->
+    <div id="riwayatList">
+      <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Memuat data...</p></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     PAGE 4: ANALITIK
+===================================================================== -->
+<div id="page-analitik" class="page">
+  <div class="page-pad">
+
+    <!-- KPI Grid -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon">🛣️</div>
+        <div class="kpi-val" id="kpiJarak">--- KM</div>
+        <div class="kpi-label">Total Jarak Tempuh</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">🏆</div>
+        <div class="kpi-val" style="font-size:.85rem" id="kpiTerbaik">-</div>
+        <div class="kpi-label">Hari Terbaik Bulan Ini</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">📈</div>
+        <div class="kpi-val" id="kpiRata">Rp 0</div>
+        <div class="kpi-label">Rata-rata Bersih / Hari</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">🎯</div>
+        <div class="kpi-val" id="kpiProyeksi">Rp 0</div>
+        <div class="kpi-label">Proyeksi Akhir Bulan</div>
+      </div>
+    </div>
+
+    <!-- Bar Chart 7 Hari -->
+    <div class="card">
+      <div class="card-body">
+        <span class="section-label">📊 Pendapatan 7 Hari Terakhir</span>
+        <div class="chart-wrap-lg">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Donut Chart Pengeluaran -->
+    <div class="card">
+      <div class="card-body">
+        <span class="section-label">🍩 Breakdown Pengeluaran Bulan Ini</span>
+        <div class="chart-wrap-donut">
+          <canvas id="donutChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== BOTTOM NAVIGATION ===== -->
+<nav id="bottomNav">
+  <button class="nav-tab active" data-page="dashboard" id="tab-dashboard">
+    <i class="fas fa-house"></i>
+    <span>Beranda</span>
+  </button>
+  <button class="nav-tab" data-page="input" id="tab-input">
+    <i class="fas fa-plus-circle"></i>
+    <span>Input</span>
+  </button>
+  <button class="nav-tab" data-page="riwayat" id="tab-riwayat">
+    <i class="fas fa-list-ul"></i>
+    <span>Riwayat</span>
+  </button>
+  <button class="nav-tab" data-page="analitik" id="tab-analitik">
+    <i class="fas fa-chart-bar"></i>
+    <span>Analitik</span>
+  </button>
+</nav>
+
+<!-- ===== TOAST CONTAINER ===== -->
+<div id="toastWrap"></div>
+
+<!-- ===== SCRIPTS ===== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/input.js"></script>
+<script src="assets/js/riwayat.js"></script>
+<script src="assets/js/analitik.js"></script>
+
 </body>
-
 </html>
