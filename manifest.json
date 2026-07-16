@@ -1,0 +1,9 @@
+{
+    "name": "Ojol KIR & Finance",
+    "short_name": "OjolKIR",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#f8f9fa",
+    "theme_color": "#212529",
+    "orientation": "portrait"
+}

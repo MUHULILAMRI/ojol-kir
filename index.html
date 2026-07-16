@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ojol KIR & Finance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f4f7f6;
+            max-width: 480px;
+            /* Membuat tampilan terkunci seperti ukuran HP di desktop */
+            margin: 0 auto;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .app-navbar {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .btn-custom-primary {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-custom-primary:hover {
+            background-color: #059669;
+            color: white;
+        }
+
+        .tracking-box {
+            background-color: #f8fafc;
+            border: 2px dashed #e2e8f0;
+            border-radius: 14px;
+        }
+
+        .finance-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar app-navbar navbar-dark py-3 px-3 shadow-sm">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div>
+                <span class="navbar-brand mb-0 h1 fw-bold text-white fs-5">Ojol<span
+                        class="text-success">KIR</span></span>
+            </div>
+            <span class="badge bg-secondary p-2 finance-badge">Mode Online</span>
+        </div>
+    </nav>
+
+    <div class="container px-3 mt-3 mb-5">
+
+        <div class="card card-custom bg-white p-3 mb-3">
+            <h6 class="text-muted fw-bold small mb-3">RINGKASAN BULAN INI</h6>
+            <div class="row text-center">
+                <div class="col-4 border-end">
+                    <span class="text-muted d-block small" style="font-size: 0.7rem;">Pendapatan</span>
+                    <span class="fw-bold text-success small" id="totalPendapatan">Rp 0</span>
+                </div>
+                <div class="col-4 border-end">
+                    <span class="text-muted d-block small" style="font-size: 0.7rem;">Pengeluaran</span>
+                    <span class="fw-bold text-danger small" id="totalPengeluaran">Rp 0</span>
+                </div>
+                <div class="col-4">
+                    <span class="text-muted d-block small" style="font-size: 0.7rem;">Bersih</span>
+                    <span class="fw-bold text-primary small" id="totalBersih">Rp 0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-custom text-white mb-3 shadow-sm" id="panelKIR"
+            style="background: linear-gradient(135deg, #059669, #10b981);">
+            <div class="card-body d-flex align-items-center justify-content-between">
+                <div>
+                    <h6 class="card-title fw-bold small opacity-75 mb-1">STATUS KELAYAKAN MOTOR</h6>
+                    <p class="card-text mb-0 fw-bold fs-5" id="statusMotorTxt">Kondisi Prima (Aman)</p>
+                </div>
+                <div class="fs-1 opacity-25">🏍️</div>
+            </div>
+        </div>
+
+        <div class="card card-custom bg-white mb-4">
+            <div class="card-body p-4">
+                <h6 class="fw-bold text-dark mb-4 border-bottom pb-2">Input Operasional Hari Ini</h6>
+
+                <form id="formOperasional">
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold">Tanggal Kerja</label>
+                        <input type="date" class="form-control form-control-lg fs-6 rounded-3" id="tanggal" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold">Total Pendapatan Kotor (Rp)</label>
+                        <input type="number" class="form-control form-control-lg fs-5 fw-bold text-success rounded-3"
+                            id="pendapatan" placeholder="Masukkan total tarif masuk" required>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="form-label text-muted small fw-bold">Biaya Bensin (Rp)</label>
+                            <input type="number" class="form-control form-control-lg fs-6 text-danger rounded-3"
+                                id="bensin" placeholder="0">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted small fw-bold">Makan & Parkir (Rp)</label>
+                            <input type="number" class="form-control form-control-lg fs-6 text-danger rounded-3"
+                                id="lain_lain" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div class="mb-4 p-3 tracking-box">
+                        <label class="form-label d-block fw-bold text-dark small mb-2">Smart Tracking Jarak
+                            Tempuh</label>
+                        <div class="d-flex gap-2 mb-3">
+                            <button type="button" class="btn btn-sm btn-primary w-50 py-2 rounded-3 fw-bold shadow-sm"
+                                onclick="catatLokasiAwal()">START SHIFT</button>
+                            <button type="button" class="btn btn-sm btn-danger w-50 py-2 rounded-3 fw-bold shadow-sm"
+                                onclick="catatLokasiAkhir()">END SHIFT</button>
+                        </div>
+                        <div class="input-group">
+                            <span
+                                class="input-group-text bg-white border-end-0 text-muted rounded-start-3 small fw-bold">Jarak
+                                Terdeteksi</span>
+                            <input type="number" step="0.01"
+                                class="form-control bg-white border-start-0 fw-bold text-end rounded-end-3"
+                                id="jarak_tempuh" placeholder="0.00" readonly>
+                            <span class="input-group-text bg-light fw-bold rounded-end-3">KM</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-custom-primary w-100 py-3 shadow">SIMPAN DATA HARIAN</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set default tanggal ke hari ini
+        document.getElementById('tanggal').valueAsDate = new Date();
+
+        let lat1 = null, lon1 = null;
+
+        function catatLokasiAwal() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    lat1 = pos.coords.latitude;
+                    lon1 = pos.coords.longitude;
+                    alert("Awal shift berhasil dikunci!");
+                }, () => alert("Gagal mengambil lokasi. Pastikan GPS aktif."));
+            }
+        }
+
+        function catatLokasiAkhir() {
+            if (navigator.geolocation && lat1 !== null) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    let lat2 = pos.coords.latitude;
+                    let lon2 = pos.coords.longitude;
+
+                    let R = 6371;
+                    let dLat = (lat2 - lat1) * Math.PI / 180;
+                    let dLon = (lon2 - lon1) * Math.PI / 180;
+                    let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                    let jarak = R * c;
+
+                    document.getElementById('jarak_tempuh').value = jarak.toFixed(2);
+                    alert("Shift selesai! Jarak berhasil dikalkulasi.");
+                });
+            } else {
+                alert("Harap klik 'START SHIFT' terlebih dahulu!");
+            }
+        }
+
+        // Kirim Data via Fetch API Ke PHP Laragon
+        document.getElementById('formOperasional').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            let payload = {
+                tanggal: document.getElementById('tanggal').value,
+                pendapatan: parseInt(document.getElementById('pendapatan').value) || 0,
+                bensin: parseInt(document.getElementById('bensin').value) || 0,
+                lain_lain: parseInt(document.getElementById('lain_lain').value) || 0,
+                jarak: parseFloat(document.getElementById('jarak_tempuh').value) || 0.00
+            };
+
+            fetch('api/proses_data.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.status === 'success') {
+                        document.getElementById('formOperasional').reset();
+                        document.getElementById('tanggal').valueAsDate = new Date();
+                    }
+                })
+                .catch(err => {
+                    console.error("Error:", err);
+                    alert("Terjadi kesalahan jaringan.");
+                });
+        });
+
+        // Fungsi untuk mengambil data terbaru dari server dan memperbarui Tampilan Dashboard
+        function muatDataDashboard() {
+            fetch('api/get_dashboard.php')
+                .then(res => res.json())
+                .then(res => {
+                    if (res.status === 'success') {
+                        document.getElementById('totalPendapatan').innerText = res.data.pendapatan;
+                        document.getElementById('totalPengeluaran').innerText = res.data.pengeluaran;
+                        document.getElementById('totalBersih').innerText = res.data.bersih;
+                        document.getElementById('statusMotorTxt').innerText = res.data.status_motor;
+
+                        // Mengubah warna latar belakang panel KIR secara dinamis sesuai status
+                        let panel = document.getElementById('panelKIR');
+                        panel.className = "card card-custom text-white mb-3 shadow-sm";
+
+                        if (res.data.status_warna === 'danger') {
+                            panel.style.background = "linear-gradient(135deg, #dc3545, #bd2130)";
+                        } else if (res.data.status_warna === 'warning') {
+                            panel.style.background = "linear-gradient(135deg, #ffc107, #e0a800)";
+                            panel.className += " text-dark";
+                        } else {
+                            panel.style.background = "linear-gradient(135deg, #059669, #10b981)";
+                        }
+                    }
+                })
+                .catch(err => console.error("Gagal memuat statistik dashboard:", err));
+        }
+
+        // Jalankan fungsi otomatis saat halaman web pertama kali dibuka
+        window.addEventListener('DOMContentLoaded', muatDataDashboard);
+    </script>
+</body>
+
+</html>
