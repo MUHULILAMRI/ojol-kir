@@ -2,7 +2,7 @@
 // OjolKIR - Core App (Router, API, Utils)
 // =============================================
 
-const API_URL = 'https://ojol-kir.page.gd/api';
+const API_URL = 'api';
 let currentPage = 'dashboard';
 let deferredInstall = null;
 
@@ -32,11 +32,21 @@ function showToast(msg, type = 'success', ms = 3200) {
 
 // ===== API =====
 async function apiFetch(endpoint, opts = {}) {
-  const res = await fetch(API_URL + endpoint, {
-    headers: { 'Content-Type': 'application/json' },
-    ...opts
-  });
-  return res.json();
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+  try {
+    const res = await fetch(API_URL + cleanEndpoint, {
+      headers: { 'Content-Type': 'application/json' },
+      ...opts
+    });
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      return { status: 'error', message: 'Respon server bukan format JSON: ' + text };
+    }
+  } catch (err) {
+    return { status: 'error', message: 'Tidak dapat terhubung ke server/offline' };
+  }
 }
 
 // ===== FORMAT =====
@@ -77,8 +87,10 @@ function installApp() {
 function updateNet() {
   const dot = document.getElementById('netDot');
   const txt = document.getElementById('netTxt');
-  if (navigator.onLine) { dot.style.background = 'var(--primary)'; txt.textContent = 'Online'; }
-  else { dot.style.background = 'var(--warning)'; txt.textContent = 'Offline'; }
+  if (dot && txt) {
+    if (navigator.onLine) { dot.style.background = 'var(--primary)'; txt.textContent = 'Online'; }
+    else { dot.style.background = 'var(--warning)'; txt.textContent = 'Offline'; }
+  }
 }
 window.addEventListener('online', updateNet);
 window.addEventListener('offline', () => { updateNet(); showToast('Koneksi terputus', 'warning'); });

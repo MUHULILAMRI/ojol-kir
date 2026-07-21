@@ -2,7 +2,7 @@
 // OjolKIR - Service Worker (PWA Offline)
 // =============================================
 
-const CACHE = 'ojolkir-v1';
+const CACHE = 'ojolkir-v3';
 const STATIC = [
   '/',
   '/index.html',
@@ -12,8 +12,7 @@ const STATIC = [
   '/assets/js/input.js',
   '/assets/js/riwayat.js',
   '/assets/js/analitik.js',
-  '/assets/icons/icon-192.png',
-  '/assets/icons/icon-512.png',
+  '/assets/icons/icon.svg',
   'https://cdn.jsdelivr.net/npm/chart.js',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css'
 ];

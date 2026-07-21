@@ -7,10 +7,27 @@ let barChartInst = null, donutChartInst = null;
 async function loadAnalitik() {
   try {
     const res = await apiFetch('/get_analitik.php');
-    if (res.status === 'success') renderAnalitik(res.data);
+    if (res && res.status === 'success') {
+      renderAnalitik(res.data);
+    } else {
+      renderAnalitikFallback();
+      if (res && res.message) showToast(res.message, 'error');
+    }
   } catch (e) {
+    renderAnalitikFallback();
     showToast('Gagal memuat analitik', 'error');
   }
+}
+
+function renderAnalitikFallback() {
+  renderAnalitik({
+    total_jarak: 0,
+    hari_terbaik: '-',
+    rata_harian: 0,
+    proyeksi_bulan: 0,
+    chart_7hari: [],
+    breakdown: { bensin: 0, lain_lain: 0 }
+  });
 }
 
 function renderAnalitik(data) {

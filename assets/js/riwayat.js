@@ -15,13 +15,15 @@ async function loadRiwayat() {
 
   try {
     const res = await apiFetch(`/get_riwayat.php?bulan=${rBulan}&tahun=${rTahun}`);
-    if (res.status === 'success') {
+    if (res && res.status === 'success') {
       renderRiwayatSummary(res.summary);
       renderRiwayatList(res.data);
     } else {
-      list.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>Tidak ada data bulan ini</p></div>';
+      renderRiwayatSummary({ total_hari: 0, pendapatan: 'Rp 0', pengeluaran: 'Rp 0', bersih: 'Rp 0' });
+      list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>${(res && res.message) || 'Tidak ada data bulan ini'}</p></div>`;
     }
   } catch (e) {
+    renderRiwayatSummary({ total_hari: 0, pendapatan: 'Rp 0', pengeluaran: 'Rp 0', bersih: 'Rp 0' });
     list.innerHTML = '<div class="empty-state"><i class="fas fa-wifi-slash"></i><p>Koneksi gagal</p></div>';
     showToast('Gagal memuat riwayat', 'error');
   }

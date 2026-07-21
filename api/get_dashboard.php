@@ -22,21 +22,7 @@ try {
     $stmtJ = $pdo->query("SELECT COALESCE(SUM(jarak_tempuh_km), 0) as total FROM operasional_harian");
     $totalJarak = $stmtJ->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 
-    // 3. Status KIR / servis motor (per 2000 KM)
-    $batasServis = 2000;
-    $sisaJarak   = $batasServis - fmod((float)$totalJarak, $batasServis);
-    $statusMotor = "Kondisi Prima (Aman)";
-    $statusWarna = "success";
-
-    if ($sisaJarak < 200) {
-        $statusMotor = "⚠️ Waktunya Servis! Sisa " . round($sisaJarak, 0) . " KM";
-        $statusWarna = "danger";
-    } elseif ($sisaJarak < 500) {
-        $statusMotor = "🔧 Jadwalkan Servis. Sisa " . round($sisaJarak, 0) . " KM";
-        $statusWarna = "warning";
-    }
-
-    // 4. Data chart 7 hari terakhir
+    // 3. Data chart 7 hari terakhir
     $stmtChart = $pdo->query("
         SELECT tanggal, COALESCE(SUM(pendapatan_kotor), 0) as pendapatan
         FROM operasional_harian
@@ -52,10 +38,7 @@ try {
             "pengeluaran" => "Rp " . number_format($pengeluaran, 0, ',', '.'),
             "bersih"      => "Rp " . number_format($bersih,      0, ',', '.'),
             "bersih_raw"  => $bersih,
-            "status_motor"=> $statusMotor,
-            "status_warna"=> $statusWarna,
             "total_jarak" => round((float)$totalJarak, 1),
-            "sisa_servis" => round($sisaJarak, 0),
             "chart_7hari" => $chart7hari
         ]
     ]);

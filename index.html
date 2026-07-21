@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0f172a">
   <meta name="description" content="Aplikasi manajemen keuangan dan kelayakan motor untuk pengemudi ojek online">
   <meta name="mobile-web-app-capable" content="yes">
@@ -13,7 +13,7 @@
 
   <!-- Manifest PWA -->
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icons/icon.svg">
 
   <!-- Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,14 +26,7 @@
 </head>
 <body>
 
-<!-- ===== TOP NAVBAR ===== -->
-<nav id="topNav">
-  <span class="nav-logo">Ojol<span>KIR</span></span>
-  <div class="net-badge">
-    <span class="net-dot" id="netDot"></span>
-    <span id="netTxt">Online</span>
-  </div>
-</nav>
+<!-- ===== TOP NAVBAR DIHAPUS UNTUK TAMPILAN MOBILE NATIVE ===== -->
 
 <!-- ===================================================================
      PAGE 1: DASHBOARD
@@ -50,13 +43,23 @@
       <button class="install-btn" onclick="installApp()">Install</button>
     </div>
 
-    <!-- Greeting -->
+    <!-- Greeting & Profile -->
     <div class="greeting-card">
       <div class="greeting-text">
-        <h2 id="greeting">Selamat Datang 👋</h2>
-        <p id="currentDate">Memuat tanggal...</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:6px">
+            <h2 id="userName" style="font-size:1.05rem;font-weight:800;color:#fff;outline:none" title="Nama">Muh. Ulil Amri</h2>
+          </div>
+          <button onclick="openProfileModal()" style="background:none;border:none;color:rgba(255,255,255,0.7);font-size:1rem;padding:5px;">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:2px">
+          <span id="userMotor" style="font-size:.78rem;color:var(--primary);font-weight:700;outline:none" title="Jenis motor">Honda Vario 150</span>
+          <i class="fas fa-motorcycle" style="font-size:.65rem;color:var(--primary);opacity:.7"></i>
+        </div>
+        <p id="currentDate" style="font-size:.65rem;color:rgba(255,255,255,.45);margin-top:4px">Memuat tanggal...</p>
       </div>
-      <div class="greeting-emoji">🏍️</div>
     </div>
 
     <!-- Summary Bulan Ini -->
@@ -83,8 +86,11 @@
     </div>
 
     <!-- KIR Panel -->
-    <div class="kir-panel success" id="kirPanel">
-      <div class="kir-label">STATUS KELAYAKAN MOTOR</div>
+    <div class="kir-panel success" id="kirPanel" onclick="openServiceModal()" style="cursor:pointer">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div class="kir-label">STATUS KELAYAKAN MOTOR</div>
+        <i class="fas fa-chevron-right" style="opacity:0.5; font-size:0.8rem;"></i>
+      </div>
       <div class="kir-status" id="kirStatus">Memuat status...</div>
       <div class="kir-sub" id="kirSub">Mengambil data odometer...</div>
     </div>
@@ -114,8 +120,8 @@
     </div>
 
     <!-- Sisa KM Servis -->
-    <div class="card" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid var(--border)">
-      <div class="card-body" style="display:flex;align-items:center;justify-content:space-between">
+    <div class="card" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid var(--border)" onclick="openServiceModal()">
+      <div class="card-body" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
         <div>
           <div style="font-size:.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">🔧 Servis Berikutnya</div>
           <div style="font-size:1.1rem;font-weight:800;color:var(--text-primary)" id="sisaServis">--- KM lagi</div>
@@ -340,6 +346,85 @@
 
 <!-- ===== TOAST CONTAINER ===== -->
 <div id="toastWrap"></div>
+
+<!-- ===== MODALS ===== -->
+<!-- Modal Profile -->
+<div class="modal-overlay" id="profileModal" onclick="if(event.target===this) closeModals()">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 style="font-size:1.1rem;font-weight:700;">Pengaturan Profil</h3>
+      <button class="modal-close" onclick="closeModals()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-lbl">Nama Pengemudi</label>
+        <input type="text" class="form-ctrl" id="inputProfileName">
+      </div>
+      <div class="form-group">
+        <label class="form-lbl">Jenis Motor</label>
+        <input type="text" class="form-ctrl" id="inputProfileMotor">
+      </div>
+      <div class="form-group">
+        <label class="form-lbl">Odometer Awal (KM)</label>
+        <div style="font-size:0.7rem; color:var(--text-muted); margin-bottom:5px;">Isi jika odometer di speedometer tidak dari nol.</div>
+        <input type="number" class="form-ctrl" id="inputProfileOdo" inputmode="numeric">
+      </div>
+      <button class="btn btn-primary btn-block" style="margin-top:15px;" onclick="saveProfile()">Simpan Profil</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Servis -->
+<div class="modal-overlay" id="serviceModal" onclick="if(event.target===this) closeModals()">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 style="font-size:1.1rem;font-weight:700;">Detail Pemeliharaan</h3>
+      <button class="modal-close" onclick="closeModals()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="margin-bottom:15px;text-align:center;background:var(--bg-light);padding:10px;border-radius:10px;">
+        <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);">ODOMETER SAAT INI</div>
+        <div style="font-size:1.4rem;font-weight:800;color:var(--primary-dark);" id="modalOdoCurrent">0 KM</div>
+      </div>
+
+      <!-- Oli Mesin -->
+      <div class="service-item">
+        <div class="si-head">
+          <div class="si-title">🛢️ Oli Mesin (2000 KM)</div>
+          <div class="si-sisa" id="sisaOliMesin">-- KM</div>
+        </div>
+        <div class="si-progress">
+          <div class="si-bar" id="barOliMesin"></div>
+        </div>
+        <button class="btn btn-sm btn-block" style="background:#f1f5f9;color:var(--text-primary);border:1px solid #cbd5e1;margin-top:8px;" onclick="resetService('oli_mesin')">Sudah Ganti Oli Mesin</button>
+      </div>
+
+      <!-- Oli Gardan -->
+      <div class="service-item">
+        <div class="si-head">
+          <div class="si-title">⚙️ Oli Gardan (8000 KM)</div>
+          <div class="si-sisa" id="sisaOliGardan">-- KM</div>
+        </div>
+        <div class="si-progress">
+          <div class="si-bar" id="barOliGardan"></div>
+        </div>
+        <button class="btn btn-sm btn-block" style="background:#f1f5f9;color:var(--text-primary);border:1px solid #cbd5e1;margin-top:8px;" onclick="resetService('oli_gardan')">Sudah Ganti Oli Gardan</button>
+      </div>
+
+      <!-- Servis CVT -->
+      <div class="service-item">
+        <div class="si-head">
+          <div class="si-title">🔧 Servis CVT (4000 KM)</div>
+          <div class="si-sisa" id="sisaServisCvt">-- KM</div>
+        </div>
+        <div class="si-progress">
+          <div class="si-bar" id="barServisCvt"></div>
+        </div>
+        <button class="btn btn-sm btn-block" style="background:#f1f5f9;color:var(--text-primary);border:1px solid #cbd5e1;margin-top:8px;" onclick="resetService('servis_cvt')">Sudah Servis CVT</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ===== SCRIPTS ===== -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
