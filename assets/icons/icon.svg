@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#1a1a1a"/>
+  
+  <!-- Red gear (top right) -->
+  <g transform="translate(300, 160) scale(0.75)" fill="#dc2626">
+    <path d="M100,55 L112,30 L128,30 L140,55 Q160,58 175,70 L200,60 L215,72 L205,97 Q215,112 218,130 L242,140 L242,158 L218,168 Q215,185 205,200 L215,225 L200,237 L175,227 Q160,238 140,242 L128,265 L112,265 L100,242 Q80,238 65,227 L40,237 L25,225 L35,200 Q25,185 22,168 L-2,158 L-2,140 L22,130 Q25,112 35,97 L25,72 L40,60 L65,70 Q80,58 100,55 Z M120,90 A57,57 0 1,0 120,218 A57,57 0 1,0 120,90 Z"/>
+  </g>
+  
+  <!-- Motorcycle body -->
+  <g transform="translate(60, 200)" fill="#ffffff">
+    <!-- Rear wheel -->
+    <circle cx="72" cy="145" r="55" fill="none" stroke="#ffffff" stroke-width="14"/>
+    <circle cx="72" cy="145" r="18" fill="#ffffff"/>
+    
+    <!-- Front wheel -->
+    <circle cx="320" cy="145" r="55" fill="none" stroke="#ffffff" stroke-width="14"/>
+    <circle cx="320" cy="145" r="18" fill="#ffffff"/>
+    
+    <!-- Main body frame -->
+    <path d="M72,145 L130,80 L220,60 L310,80 L320,145" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Fuel tank -->
+    <ellipse cx="210" cy="78" rx="55" ry="28" fill="#dc2626"/>
+    
+    <!-- Seat -->
+    <path d="M150,80 Q180,68 240,70 Q260,72 265,85 Q240,90 190,90 Z" fill="#ffffff"/>
+    
+    <!-- Engine -->
+    <rect x="155" y="100" width="60" height="45" rx="8" fill="#dc2626"/>
+    
+    <!-- Exhaust pipe -->
+    <path d="M155,130 Q110,140 95,150" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+    
+    <!-- Front fork -->
+    <path d="M280,85 L320,145" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+    
+    <!-- Handlebar -->
+    <path d="M265,85 L300,70" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+    
+    <!-- Rider silhouette -->
+    <ellipse cx="195" cy="62" rx="18" ry="18" fill="#ffffff"/>
+    <path d="M195,80 Q205,95 200,115 Q180,115 175,95 Z" fill="#ffffff"/>
+  </g>
+  
+  <!-- "DF" text at bottom -->
+  <text x="256" y="470" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="56" font-weight="900" fill="#dc2626" letter-spacing="8">DF</text>
+</svg>

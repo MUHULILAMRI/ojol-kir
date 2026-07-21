@@ -1,13 +1,13 @@
 {
-  "name": "OjolKIR - Manajemen Ojol",
-  "short_name": "OjolKIR",
+  "name": "DONEFAST Tracer - Manajemen Ojol",
+  "short_name": "DONEFAST",
   "description": "Aplikasi manajemen keuangan dan KIR motor untuk pengemudi ojek online",
   "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0f172a",
-  "theme_color": "#0f172a",
+  "background_color": "#1a0000",
+  "theme_color": "#1a0000",
   "categories": ["finance", "productivity"],
   "icons": [
     {

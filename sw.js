@@ -2,7 +2,7 @@
 // OjolKIR - Service Worker (PWA Offline)
 // =============================================
 
-const CACHE = 'ojolkir-v4';
+const CACHE = 'donefast-v1';
 const STATIC = [
   '/',
   '/index.html',
