@@ -92,7 +92,7 @@ function renderMiniChart(data) {
       labels,
       datasets: [{
         data: vals,
-        backgroundColor: vals.map(v => v === maxV && v > 0 ? 'rgba(16,185,129,0.9)' : 'rgba(16,185,129,0.25)'),
+        backgroundColor: vals.map(v => v === maxV && v > 0 ? 'rgba(238,39,55,0.9)' : 'rgba(238,39,55,0.25)'),
         borderRadius: 6,
         borderSkipped: false
       }]

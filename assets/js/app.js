@@ -9,9 +9,16 @@ let deferredInstall = null;
 // ===== ROUTER =====
 function navigateTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => {
+    t.classList.remove('active');
+    let i = t.querySelector('i');
+    if(i) i.className = i.className.replace('ph-fill', 'ph');
+  });
   document.getElementById('page-' + page).classList.add('active');
-  document.querySelector(`[data-page="${page}"]`).classList.add('active');
+  const activeTab = document.querySelector(`[data-page="${page}"]`);
+  activeTab.classList.add('active');
+  let activeIcon = activeTab.querySelector('i');
+  if(activeIcon) activeIcon.className = activeIcon.className.replace('ph ', 'ph-fill ');
   currentPage = page;
   if (page === 'dashboard') loadDashboard();
   if (page === 'riwayat') loadRiwayat();

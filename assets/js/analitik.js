@@ -57,7 +57,7 @@ function renderBarChart(data) {
       datasets: [{
         label: 'Pendapatan',
         data: vals,
-        backgroundColor: vals.map(v => v === maxV && v > 0 ? '#10b981' : 'rgba(16,185,129,0.28)'),
+        backgroundColor: vals.map(v => v === maxV && v > 0 ? '#EE2737' : 'rgba(238,39,55,0.28)'),
         borderRadius: 8,
         borderSkipped: false
       }]
@@ -103,7 +103,7 @@ function renderDonutChart(breakdown) {
       labels: ['Bensin', 'Parkir / Makan'],
       datasets: [{
         data: [bensin, lain],
-        backgroundColor: ['#10b981', '#f59e0b'],
+        backgroundColor: ['#EE2737', '#f59e0b'],
         borderWidth: 0,
         hoverOffset: 10
       }]

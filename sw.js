@@ -2,7 +2,7 @@
 // OjolKIR - Service Worker (PWA Offline)
 // =============================================
 
-const CACHE = 'donefast-v1';
+const CACHE = 'donefast-v2';
 const STATIC = [
   '/',
   '/index.html',
@@ -14,7 +14,7 @@ const STATIC = [
   '/assets/js/analitik.js',
   '/assets/icons/icon.svg',
   'https://cdn.jsdelivr.net/npm/chart.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css'
+  'https://unpkg.com/@phosphor-icons/web'
 ];
 
 // Install: cache semua file statis

@@ -23,7 +23,7 @@ plugins {
 def twaManifest = [
     applicationId: 'com.ojolkir.app',
     hostName: 'muhulilamri.github.io', // The domain being opened in the TWA.
-    launchUrl: '/ojol-kir/index.html', // The start path for the TWA. Must be relative to the domain.
+    launchUrl: '/index.html', // The start path for the TWA. Must be relative to the domain.
     name: 'DONEFAST Tracer - Manajemen Ojol', // The application name.
     launcherName: 'DONEFAST', // The name shown on the Android Launcher.
     themeColor: '#1a0000', // The color used for the status bar.

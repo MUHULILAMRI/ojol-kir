@@ -21,12 +21,12 @@
 
   <!-- Styles -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <link href="assets/css/app.css" rel="stylesheet">
 </head>
 <body>
 
-<!-- ===== TOP NAVBAR DIHAPUS UNTUK TAMPILAN MOBILE NATIVE ===== -->
+<div class="hero-bg"></div>
 
 <!-- ===================================================================
      PAGE 1: DASHBOARD
@@ -35,18 +35,18 @@
   <div class="page-pad">
 
     <!-- DONEFAST Branding Header -->
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0 4px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0 15px;">
       <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:38px;height:38px;background:linear-gradient(135deg,#b91c1c,#dc2626);border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(220,38,38,.35);">
-          <i class="fas fa-motorcycle" style="color:#fff;font-size:1rem;"></i>
+        <div style="width:38px;height:38px;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.15);">
+          <i class="ph-bold ph-motorcycle" style="color:#EE2737;font-size:1.4rem;"></i>
         </div>
         <div>
-          <div style="font-size:1.05rem;font-weight:900;color:#1a1a1a;letter-spacing:-0.5px;line-height:1;">DONEFAST <span style="color:#dc2626;">Tracer</span></div>
-          <div style="font-size:.58rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Manajemen Ojol</div>
+          <div style="font-size:1.05rem;font-weight:900;color:#fff;letter-spacing:-0.5px;line-height:1;">DONEFAST <span style="color:rgba(255,255,255,0.7);">Tracer</span></div>
+          <div style="font-size:.58rem;font-weight:600;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:1px;">Manajemen Ojol</div>
         </div>
       </div>
-      <div style="display:flex;align-items:center;gap:5px;background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);border-radius:20px;padding:5px 10px;font-size:0.68rem;font-weight:600;color:#dc2626;">
-        <span style="width:6px;height:6px;border-radius:50%;background:#dc2626;display:inline-block;animation:blink 2s infinite;"></span>
+      <div class="net-badge">
+        <span class="net-dot"></span>
         <span id="netTxt">Online</span>
       </div>
     </div>
@@ -61,21 +61,21 @@
     </div>
 
     <!-- Greeting & Profile -->
-    <div class="greeting-card">
+    <div class="greeting-header">
       <div class="greeting-text">
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <div style="display:flex;align-items:center;gap:6px">
-            <h2 id="userName" style="font-size:1.05rem;font-weight:800;color:#fff;outline:none" title="Nama">Muh. Ulil Amri</h2>
+            <h2 id="userName" style="font-size:1.25rem;font-weight:800;color:#fff;outline:none" title="Nama">Muh. Ulil Amri</h2>
           </div>
-          <button onclick="openProfileModal()" style="background:none;border:none;color:rgba(255,255,255,0.7);font-size:1rem;padding:5px;">
-            <i class="fas fa-cog"></i>
+          <button onclick="openProfileModal()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;font-size:1.1rem;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+            <i class="ph-bold ph-gear"></i>
           </button>
         </div>
         <div style="display:flex;align-items:center;gap:6px;margin-top:2px">
-          <span id="userMotor" style="font-size:.78rem;color:var(--primary);font-weight:700;outline:none" title="Jenis motor">Honda Vario 150</span>
-          <i class="fas fa-motorcycle" style="font-size:.65rem;color:var(--primary);opacity:.7"></i>
+          <span id="userMotor" style="font-size:.8rem;color:#fff;font-weight:600;outline:none" title="Jenis motor">Honda Vario 150</span>
+          <i class="ph-fill ph-motorcycle" style="font-size:.85rem;color:rgba(255,255,255,.9)"></i>
         </div>
-        <p id="currentDate" style="font-size:.65rem;color:rgba(255,255,255,.45);margin-top:4px">Memuat tanggal...</p>
+        <p id="currentDate" style="font-size:.65rem;color:rgba(255,255,255,.7);margin-top:4px">Memuat tanggal...</p>
       </div>
     </div>
 
@@ -104,12 +104,15 @@
 
     <!-- KIR Panel -->
     <div class="kir-panel success" id="kirPanel" onclick="openServiceModal()" style="cursor:pointer">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div class="kir-label">STATUS KELAYAKAN MOTOR</div>
-        <i class="fas fa-chevron-right" style="opacity:0.5; font-size:0.8rem;"></i>
+      <div class="kir-icon">
+        <i class="ph-fill ph-check-circle"></i>
       </div>
-      <div class="kir-status" id="kirStatus">Memuat status...</div>
-      <div class="kir-sub" id="kirSub">Mengambil data odometer...</div>
+      <div style="flex:1">
+        <div class="kir-label">Status Kendaraan</div>
+        <div class="kir-status" id="kirStatus">Memuat status...</div>
+        <div class="kir-sub" id="kirSub">Mengambil data odometer...</div>
+      </div>
+      <i class="ph-bold ph-caret-right" style="color:var(--text-muted);font-size:1.2rem;"></i>
     </div>
 
     <!-- KPI Mini Grid -->
@@ -344,19 +347,19 @@
 <!-- ===== BOTTOM NAVIGATION ===== -->
 <nav id="bottomNav">
   <button class="nav-tab active" data-page="dashboard" id="tab-dashboard">
-    <i class="fas fa-house"></i>
+    <i class="ph-fill ph-house"></i>
     <span>Beranda</span>
   </button>
   <button class="nav-tab" data-page="input" id="tab-input">
-    <i class="fas fa-plus-circle"></i>
+    <i class="ph ph-plus-circle"></i>
     <span>Input</span>
   </button>
   <button class="nav-tab" data-page="riwayat" id="tab-riwayat">
-    <i class="fas fa-list-ul"></i>
+    <i class="ph ph-list-dashes"></i>
     <span>Riwayat</span>
   </button>
   <button class="nav-tab" data-page="analitik" id="tab-analitik">
-    <i class="fas fa-chart-bar"></i>
+    <i class="ph ph-chart-bar"></i>
     <span>Analitik</span>
   </button>
 </nav>
