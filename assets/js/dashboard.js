@@ -209,6 +209,10 @@ function openServiceModal() {
   document.getElementById('serviceModal').classList.add('active');
 }
 
+function openInfoModal() {
+  document.getElementById('infoModal').classList.add('active');
+}
+
 function closeModals() {
   document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
 }

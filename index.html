@@ -67,9 +67,14 @@
           <div style="display:flex;align-items:center;gap:6px">
             <h2 id="userName" style="font-size:1.25rem;font-weight:800;color:#fff;outline:none" title="Nama">Muh. Ulil Amri</h2>
           </div>
-          <button onclick="openProfileModal()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;font-size:1.1rem;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
-            <i class="ph-bold ph-gear"></i>
-          </button>
+          <div style="display:flex;gap:8px;">
+            <button onclick="openInfoModal()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;font-size:1.1rem;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+              <i class="ph-bold ph-info"></i>
+            </button>
+            <button onclick="openProfileModal()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;font-size:1.1rem;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+              <i class="ph-bold ph-gear"></i>
+            </button>
+          </div>
         </div>
         <div style="display:flex;align-items:center;gap:6px;margin-top:2px">
           <span id="userMotor" style="font-size:.8rem;color:#fff;font-weight:600;outline:none" title="Jenis motor">Honda Vario 150</span>
@@ -441,6 +446,34 @@
           <div class="si-bar" id="barServisCvt"></div>
         </div>
         <button class="btn btn-sm btn-block" style="background:#f1f5f9;color:var(--text-primary);border:1px solid #cbd5e1;margin-top:8px;" onclick="resetService('servis_cvt')">Sudah Servis CVT</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Info/Tentang -->
+<div class="modal-overlay" id="infoModal" onclick="if(event.target===this) closeModals()">
+  <div class="modal-content" style="max-height:85vh;overflow-y:auto;">
+    <div class="modal-header">
+      <h3 style="font-size:1.1rem;font-weight:700;">Tentang Aplikasi</h3>
+      <button class="modal-close" onclick="closeModals()">&times;</button>
+    </div>
+    <div class="modal-body" style="text-align:center;">
+      <div style="width:60px;height:60px;background:var(--primary-dark);border-radius:15px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+        <i class="ph-bold ph-motorcycle" style="color:#fff;font-size:2rem;"></i>
+      </div>
+      <h4 style="font-size:1.2rem;font-weight:800;color:var(--text-primary);margin-bottom:5px;">DONEFAST Tracer</h4>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:15px;">Aplikasi ini dirancang khusus untuk membantu pengemudi Ojek Online dalam memanajemen keuangan harian (pendapatan, pengeluaran bensin, makan, dll) sekaligus melacak jadwal pemeliharaan (servis, ganti oli) kendaraan secara presisi berdasarkan jarak tempuh, demi memaksimalkan keuntungan bersih secara efisien.</p>
+
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:15px;margin-bottom:15px;">
+        <div style="font-size:0.8rem;font-weight:700;color:var(--text-primary);margin-bottom:5px;">Dukung Developer ☕</div>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:15px;">Terima kasih telah menggunakan DONEFAST Tracer! Dukungan Anda sangat berarti bagi pengembangan fitur-fitur baru ke depannya.</p>
+        <img src="assets/img/qris.jpg" alt="QRIS Donasi" style="width:100%;max-width:250px;border-radius:10px;margin:0 auto;display:block;box-shadow:0 3px 8px rgba(0,0,0,0.1);">
+      </div>
+
+      <div style="font-size:0.75rem;color:var(--text-muted);">
+        Dikembangkan dengan ❤️ oleh<br>
+        <b style="color:var(--text-primary);font-size:0.85rem;display:inline-block;margin-top:4px;">MUH. ULIL AMRI, S.Kom</b>
       </div>
     </div>
   </div>
