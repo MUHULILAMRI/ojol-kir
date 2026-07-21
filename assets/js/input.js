@@ -40,19 +40,19 @@ function catatLokasiAwal() {
 
   if (!navigator.geolocation) {
     showToast('GPS tidak tersedia di perangkat ini', 'error');
-    btn.disabled = false; btn.innerHTML = '<i class="fas fa-play"></i> START';
+    btn.disabled = false; btn.innerHTML = '<i class="ph-fill ph-play"></i> START';
     return;
   }
 
   navigator.geolocation.getCurrentPosition(pos => {
     lat1 = pos.coords.latitude;
     lon1 = pos.coords.longitude;
-    btn.innerHTML = '<i class="fas fa-check"></i> Terkunci!';
+    btn.innerHTML = '<i class="ph-bold ph-check"></i> Terkunci!';
     btn.style.background = '#047857';
     showToast('📍 Lokasi awal berhasil dikunci!', 'success');
   }, err => {
     showToast('Gagal ambil GPS. Aktifkan lokasi!', 'error');
-    btn.disabled = false; btn.innerHTML = '<i class="fas fa-play"></i> START';
+    btn.disabled = false; btn.innerHTML = '<i class="ph-fill ph-play"></i> START';
     btn.style.background = '';
   }, { timeout: 12000, enableHighAccuracy: true });
 }
@@ -70,12 +70,12 @@ function catatLokasiAkhir() {
     const jEl = document.getElementById('jarak_tempuh');
     if (jEl) jEl.value = jarak.toFixed(2);
     updatePreview();
-    btn.innerHTML = '<i class="fas fa-flag-checkered"></i> Selesai';
+    btn.innerHTML = '<i class="ph-bold ph-flag"></i> Selesai';
     btn.style.background = '#991b1b';
     showToast(`✅ Selesai! Jarak: ${jarak.toFixed(2)} KM`, 'success');
   }, () => {
     showToast('Gagal ambil GPS akhir', 'error');
-    btn.disabled = false; btn.innerHTML = '<i class="fas fa-stop"></i> END';
+    btn.disabled = false; btn.innerHTML = '<i class="ph-fill ph-stop"></i> END';
     btn.style.background = '';
   }, { timeout: 12000, enableHighAccuracy: true });
 }
@@ -95,8 +95,8 @@ function resetForm() {
     const b = document.getElementById(id);
     if (b) { b.disabled = false; b.style.background = ''; }
   });
-  document.getElementById('btnStart').innerHTML = '<i class="fas fa-play"></i> START';
-  document.getElementById('btnEnd').innerHTML = '<i class="fas fa-stop"></i> END';
+  document.getElementById('btnStart').innerHTML = '<i class="ph-fill ph-play"></i> START';
+  document.getElementById('btnEnd').innerHTML = '<i class="ph-fill ph-stop"></i> END';
   updatePreview();
 }
 
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast('Koneksi gagal. Coba lagi.', 'error');
     } finally {
       submitting = false;
-      if (btn) { btn.innerHTML = '<i class="fas fa-save"></i> SIMPAN DATA HARIAN'; btn.disabled = false; }
+      if (btn) { btn.innerHTML = '<i class="ph-bold ph-floppy-disk"></i> SIMPAN DATA HARIAN'; btn.disabled = false; }
     }
   });
 });

@@ -209,20 +209,20 @@
             <label class="form-lbl"><i class="ph-bold ph-map-pin" style="margin-right:4px;"></i> Smart Tracking Jarak</label>
             <div class="tracking-box">
               <div class="tracking-head">
-                <i class="fas fa-satellite-dish"></i> GPS Shift Tracker
+                <i class="ph-bold ph-navigation-arrow"></i> GPS Shift Tracker
               </div>
               <div class="tracking-btns">
                 <button type="button" id="btnStart" class="btn btn-primary btn-sm"
                   onclick="catatLokasiAwal()">
-                  <i class="fas fa-play"></i> START
+                  <i class="ph-fill ph-play"></i> START
                 </button>
                 <button type="button" id="btnEnd" class="btn btn-danger btn-sm"
                   onclick="catatLokasiAkhir()">
-                  <i class="fas fa-stop"></i> END
+                  <i class="ph-fill ph-stop"></i> END
                 </button>
               </div>
               <div class="tracking-result">
-                <span class="tr-label"><i class="fas fa-road"></i> Jarak</span>
+                <span class="tr-label"><i class="ph-bold ph-path"></i> Jarak</span>
                 <input type="number" step="0.01" id="jarak_tempuh" placeholder="0.00" readonly>
                 <span style="font-size:.75rem;font-weight:700;color:var(--text-muted)">KM</span>
               </div>
@@ -250,7 +250,7 @@
 
           <!-- Submit -->
           <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg btn-block">
-            <i class="fas fa-save"></i> SIMPAN DATA HARIAN
+            <i class="ph-bold ph-floppy-disk"></i> SIMPAN DATA HARIAN
           </button>
 
         </form>
@@ -290,7 +290,7 @@
 
     <!-- List -->
     <div id="riwayatList">
-      <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Memuat data...</p></div>
+      <div class="empty-state"><span class="spinner"></span><p>Memuat data...</p></div>
     </div>
 
   </div>
