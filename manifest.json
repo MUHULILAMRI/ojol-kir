@@ -4,16 +4,16 @@
   "description": "Aplikasi manajemen keuangan dan KIR motor untuk pengemudi ojek online",
   "start_url": "/index.html",
   "scope": "/",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "portrait",
   "background_color": "#1a0000",
   "theme_color": "#1a0000",
   "categories": ["finance", "productivity"],
   "icons": [
     {
-      "src": "/assets/icons/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/assets/icons/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],
@@ -23,7 +23,7 @@
       "short_name": "Input",
       "description": "Catat pendapatan hari ini",
       "url": "/index.html#input",
-      "icons": [{ "src": "/assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+      "icons": [{ "src": "/assets/icons/icon.png", "sizes": "512x512", "type": "image/png" }]
     }
   ]
 }
