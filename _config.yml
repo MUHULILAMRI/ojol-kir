@@ -1,0 +1,4 @@
+# GitHub Pages Jekyll config
+# Izinkan folder .well-known agar assetlinks.json bisa diakses
+include:
+  - .well-known

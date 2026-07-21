@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.ojolkir.app",
+    "sha256_cert_fingerprints": [
+      "29:8C:80:0A:1C:65:03:AB:FD:19:D3:F7:85:37:DC:97:9E:8B:91:2A:95:07:78:BB:12:1A:79:44:8C:47:1C:0D"
+    ]
+  }
+}]
