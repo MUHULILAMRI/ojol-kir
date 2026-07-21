@@ -2,7 +2,7 @@
 // OjolKIR - Service Worker (PWA Offline)
 // =============================================
 
-const CACHE = 'donefast-v2';
+const CACHE = 'donefast-v3';
 const STATIC = [
   '/',
   '/index.html',
@@ -13,6 +13,7 @@ const STATIC = [
   '/assets/js/riwayat.js',
   '/assets/js/analitik.js',
   '/assets/icons/icon.svg',
+  '/assets/img/qris.jpg',
   'https://cdn.jsdelivr.net/npm/chart.js',
   'https://unpkg.com/@phosphor-icons/web'
 ];
