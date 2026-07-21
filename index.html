@@ -123,12 +123,12 @@
     <!-- KPI Mini Grid -->
     <div class="kpi-mini-grid">
       <div class="kpi-mini">
-        <div class="kpi-mini-icon">📈</div>
+        <div class="kpi-mini-icon"><i class="ph-bold ph-trend-up"></i></div>
         <div class="kpi-mini-val text-blue" id="avgHarian">Rp 0</div>
         <div class="kpi-mini-label">Rata-rata / hari</div>
       </div>
       <div class="kpi-mini">
-        <div class="kpi-mini-icon">🎯</div>
+        <div class="kpi-mini-icon"><i class="ph-bold ph-target"></i></div>
         <div class="kpi-mini-val text-success" id="proyeksi">Rp 0</div>
         <div class="kpi-mini-label">Proyeksi bulan ini</div>
       </div>
@@ -137,7 +137,7 @@
     <!-- Mini Chart 7 Hari -->
     <div class="card">
       <div class="card-body">
-        <span class="section-label">📊 Pendapatan 7 Hari Terakhir</span>
+        <span class="section-label"><i class="ph-bold ph-chart-bar" style="margin-right:4px;"></i> Pendapatan 7 Hari Terakhir</span>
         <div class="chart-wrap">
           <canvas id="miniChart"></canvas>
         </div>
@@ -148,10 +148,10 @@
     <div class="card" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid var(--border)" onclick="openServiceModal()">
       <div class="card-body" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer">
         <div>
-          <div style="font-size:.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">🔧 Servis Berikutnya</div>
+          <div style="font-size:.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px"><i class="ph-bold ph-wrench" style="margin-right:4px;"></i> Servis Berikutnya</div>
           <div style="font-size:1.1rem;font-weight:800;color:var(--text-primary)" id="sisaServis">--- KM lagi</div>
         </div>
-        <div style="font-size:2rem;opacity:.3">⚙️</div>
+        <div style="font-size:2rem;opacity:.3"><i class="ph-fill ph-gear"></i></div>
       </div>
     </div>
 
@@ -167,7 +167,7 @@
     <div class="card">
       <div class="card-body">
         <div class="section-head" style="margin-bottom:14px">
-          <span class="section-title">📝 Input Operasional Harian</span>
+          <span class="section-title"><i class="ph-bold ph-note-pencil" style="margin-right:4px;"></i> Input Operasional Harian</span>
         </div>
 
         <form id="formOperasional">
@@ -180,7 +180,7 @@
 
           <!-- Pendapatan -->
           <div class="form-group">
-            <label class="form-lbl">💰 Total Pendapatan Kotor (Rp)</label>
+            <label class="form-lbl"><i class="ph-bold ph-money" style="margin-right:4px;"></i> Total Pendapatan Kotor (Rp)</label>
             <input type="number" class="form-ctrl income-input" id="pendapatan"
               placeholder="0" inputmode="numeric" required>
           </div>
@@ -190,15 +190,15 @@
             <label class="form-lbl">Pengeluaran Operasional</label>
             <div class="form-row-3">
               <div>
-                <div style="font-size:.6rem;font-weight:600;color:var(--text-muted);margin-bottom:5px">⛽ Bensin</div>
+                <div style="font-size:.6rem;font-weight:600;color:var(--text-muted);margin-bottom:5px"><i class="ph-bold ph-gas-pump" style="margin-right:4px;"></i> Bensin</div>
                 <input type="number" class="form-ctrl" id="bensin" placeholder="0" inputmode="numeric">
               </div>
               <div>
-                <div style="font-size:.6rem;font-weight:600;color:var(--text-muted);margin-bottom:5px">🍚 Parkir/Makan</div>
+                <div style="font-size:.6rem;font-weight:600;color:var(--text-muted);margin-bottom:5px"><i class="ph-bold ph-fork-knife" style="margin-right:4px;"></i> Makan/Parkir</div>
                 <input type="number" class="form-ctrl" id="lain_lain" placeholder="0" inputmode="numeric">
               </div>
               <div>
-                <div style="font-size:.6rem;font-weight:600;color:var(--text-muted);margin-bottom:5px">🔧 Servis</div>
+                <div style="font-size:.6rem;font-weight:600;color:var(--text-muted);margin-bottom:5px"><i class="ph-bold ph-wrench" style="margin-right:4px;"></i> Servis</div>
                 <input type="number" class="form-ctrl" id="servis" placeholder="0" inputmode="numeric">
               </div>
             </div>
@@ -206,7 +206,7 @@
 
           <!-- GPS Tracking -->
           <div class="form-group">
-            <label class="form-lbl">📍 Smart Tracking Jarak</label>
+            <label class="form-lbl"><i class="ph-bold ph-map-pin" style="margin-right:4px;"></i> Smart Tracking Jarak</label>
             <div class="tracking-box">
               <div class="tracking-head">
                 <i class="fas fa-satellite-dish"></i> GPS Shift Tracker
@@ -232,7 +232,7 @@
           <!-- Preview -->
           <div class="preview-card" id="previewCard">
             <div style="font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--primary-dark);margin-bottom:8px">
-              ✅ Ringkasan
+              <i class="ph-bold ph-check-circle" style="margin-right:4px;"></i> Ringkasan
             </div>
             <div class="preview-row">
               <span class="pr-label">Pendapatan</span>
@@ -305,22 +305,22 @@
     <!-- KPI Grid -->
     <div class="kpi-grid">
       <div class="kpi-card">
-        <div class="kpi-icon">🛣️</div>
+        <div class="kpi-icon"><i class="ph-bold ph-map-trifold"></i></div>
         <div class="kpi-val" id="kpiJarak">--- KM</div>
         <div class="kpi-label">Total Jarak Tempuh</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-icon">🏆</div>
+        <div class="kpi-icon"><i class="ph-bold ph-trophy"></i></div>
         <div class="kpi-val" style="font-size:.85rem" id="kpiTerbaik">-</div>
         <div class="kpi-label">Hari Terbaik Bulan Ini</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-icon">📈</div>
+        <div class="kpi-icon"><i class="ph-bold ph-trend-up"></i></div>
         <div class="kpi-val" id="kpiRata">Rp 0</div>
         <div class="kpi-label">Rata-rata Bersih / Hari</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-icon">🎯</div>
+        <div class="kpi-icon"><i class="ph-bold ph-target"></i></div>
         <div class="kpi-val" id="kpiProyeksi">Rp 0</div>
         <div class="kpi-label">Proyeksi Akhir Bulan</div>
       </div>
@@ -329,7 +329,7 @@
     <!-- Bar Chart 7 Hari -->
     <div class="card">
       <div class="card-body">
-        <span class="section-label">📊 Pendapatan 7 Hari Terakhir</span>
+        <span class="section-label"><i class="ph-bold ph-chart-bar" style="margin-right:4px;"></i> Pendapatan 7 Hari Terakhir</span>
         <div class="chart-wrap-lg">
           <canvas id="barChart"></canvas>
         </div>
@@ -339,7 +339,7 @@
     <!-- Donut Chart Pengeluaran -->
     <div class="card">
       <div class="card-body">
-        <span class="section-label">🍩 Breakdown Pengeluaran Bulan Ini</span>
+        <span class="section-label"><i class="ph-bold ph-chart-pie-slice" style="margin-right:4px;"></i> Breakdown Pengeluaran Bulan Ini</span>
         <div class="chart-wrap-donut">
           <canvas id="donutChart"></canvas>
         </div>
@@ -415,7 +415,7 @@
       <!-- Oli Mesin -->
       <div class="service-item">
         <div class="si-head">
-          <div class="si-title">🛢️ Oli Mesin (2000 KM)</div>
+          <div class="si-title"><i class="ph-bold ph-drop" style="margin-right:4px;"></i> Oli Mesin (2000 KM)</div>
           <div class="si-sisa" id="sisaOliMesin">-- KM</div>
         </div>
         <div class="si-progress">
@@ -427,7 +427,7 @@
       <!-- Oli Gardan -->
       <div class="service-item">
         <div class="si-head">
-          <div class="si-title">⚙️ Oli Gardan (8000 KM)</div>
+          <div class="si-title"><i class="ph-bold ph-gear" style="margin-right:4px;"></i> Oli Gardan (8000 KM)</div>
           <div class="si-sisa" id="sisaOliGardan">-- KM</div>
         </div>
         <div class="si-progress">
@@ -439,7 +439,7 @@
       <!-- Servis CVT -->
       <div class="service-item">
         <div class="si-head">
-          <div class="si-title">🔧 Servis CVT (4000 KM)</div>
+          <div class="si-title"><i class="ph-bold ph-wrench" style="margin-right:4px;"></i> Servis CVT (4000 KM)</div>
           <div class="si-sisa" id="sisaServisCvt">-- KM</div>
         </div>
         <div class="si-progress">
