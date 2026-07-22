@@ -1,18 +1,18 @@
 // =============================================
-// OjolKIR - Service Worker (PWA Offline) v15
+// OjolKIR - Service Worker (PWA Offline) v20
 // =============================================
 
-const CACHE = 'donefast-v15';
+const CACHE = 'donefast-v20';
 const STATIC = [
   './',
   './index.html',
   './manifest.json',
-  './assets/css/app.css?v=3.0',
-  './assets/js/app.js?v=3.0',
-  './assets/js/dashboard.js?v=3.0',
-  './assets/js/input.js?v=3.0',
-  './assets/js/riwayat.js?v=3.0',
-  './assets/js/analitik.js?v=3.0',
+  './assets/css/app.css?v=3.5',
+  './assets/js/app.js?v=3.5',
+  './assets/js/dashboard.js?v=3.5',
+  './assets/js/input.js?v=3.5',
+  './assets/js/riwayat.js?v=3.5',
+  './assets/js/analitik.js?v=3.5',
   './assets/icons/icon.svg',
   './assets/icons/icon.png',
   'https://cdn.jsdelivr.net/npm/chart.js',

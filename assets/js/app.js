@@ -298,12 +298,11 @@ function selectPlatformOnboarding(el) {
 }
 
 function checkOnboarding() {
-  const isComplete = localStorage.getItem('ojolkir_profile_complete');
-  if (!isComplete) {
+  loadProfile();
+  const hasProfile = localStorage.getItem('ojolkir_profile_complete') || localStorage.getItem('ojolkir_user_name') || localStorage.getItem('ojolkir_name');
+  if (!hasProfile) {
     const obModal = document.getElementById('onboardingModal');
     if (obModal) obModal.classList.add('active');
-  } else {
-    loadProfile();
   }
 }
 
@@ -313,15 +312,16 @@ function completeOnboarding() {
   const target = parseFloat(document.getElementById('obTarget')?.value) || 200000;
 
   localStorage.setItem('ojolkir_user_name', name);
+  localStorage.setItem('ojolkir_name', name);
   localStorage.setItem('ojolkir_user_motor', motor);
+  localStorage.setItem('ojolkir_motor', motor);
   localStorage.setItem('ojolkir_platform', selectedPlatformOnboarding);
   localStorage.setItem('ojolkir_target_harian', target);
   localStorage.setItem('ojolkir_profile_complete', '1');
 
-  const obModal = document.getElementById('onboardingModal');
-  if (obModal) obModal.classList.remove('active');
-
+  closeAllModals();
   loadProfile();
+  if (typeof loadDashboard === 'function') loadDashboard();
   showToast(`Selamat datang Bang ${name}! Siap narik harian. 🚀`, 'success', 4000);
   requestNotificationPermission();
 }
@@ -413,6 +413,10 @@ function closeModals() {
   document.querySelectorAll('.modal-overlay').forEach(m => {
     if (m.id !== 'onboardingModal') m.classList.remove('active');
   });
+}
+
+function closeAllModals() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
 }
 
 // ===== SYSTEM POP-UP NOTIFICATIONS =====
