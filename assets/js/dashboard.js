@@ -76,6 +76,9 @@ function renderDashboard(data) {
   if (aveEl)  animateNumber(aveEl, avg, v => formatRp(v));
   if (projEl) animateNumber(projEl, proyeksi, v => formatRp(v));
 
+  // Chart 7 hari
+  renderMiniChart(data.chart_7hari || []);
+
   // Target Harian
   updateTargetHarianUI(data);
 
@@ -85,8 +88,12 @@ function renderDashboard(data) {
 
 function updateTargetHarianUI(data) {
   const targetHarian = parseFloat(localStorage.getItem('ojolkir_target_harian')) || 200000;
+
+  // Coba ambil pendapatan hari ini dari data DB lokal (akurat)
   const db = getDb();
-  const todayStr = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  // Gunakan waktu lokal (bukan UTC) agar cocok dengan input data harian
+  const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
   const todayEntries = db.filter(d => d.tanggal === todayStr);
   const todayIncome = todayEntries.reduce((s, x) => s + (Number(x.pendapatan_kotor) || 0), 0);
 
@@ -96,7 +103,17 @@ function updateTargetHarianUI(data) {
   const fillEl = document.getElementById('targetBarFill');
 
   if (txtEl)  txtEl.textContent  = `${formatRp(todayIncome)} / ${formatRp(targetHarian)} (${pct}%)`;
-  if (fillEl) fillEl.style.width = pct + '%';
+  if (fillEl) {
+    fillEl.style.width = pct + '%';
+    // Ubah warna bar sesuai pencapaian
+    if (pct >= 100) {
+      fillEl.style.background = 'linear-gradient(90deg, #22c55e, #4ade80)';
+    } else if (pct >= 70) {
+      fillEl.style.background = 'linear-gradient(90deg, #f59e0b, #fbbf24)';
+    } else {
+      fillEl.style.background = 'linear-gradient(90deg, var(--primary), #ff6b6b)';
+    }
+  }
 }
 
 // ===== ANIMATED NUMBER COUNT UP =====

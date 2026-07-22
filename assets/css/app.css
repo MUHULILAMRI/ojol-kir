@@ -1424,3 +1424,85 @@ input, textarea, select {
   border-color: var(--primary);
   color: var(--primary-dark);
 }
+
+/* ===== PLATFORM BADGES ===== */
+.platform-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #fff;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+.platform-badge.gojek     { background: #00AA13; }
+.platform-badge.grab      { background: #00B14F; }
+.platform-badge.maxim     { background: #FFCC00; color: #000; }
+.platform-badge.shopeefood{ background: #EE4D2D; }
+.platform-badge.lalamove  { background: #F7A800; color: #000; }
+.platform-badge.indrive   { background: #1A1A1A; }
+
+/* ===== PLATFORM GRID SELECTOR ===== */
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.platform-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 6px;
+  border-radius: var(--r-lg);
+  border: 2px solid var(--border);
+  background: var(--bg-light);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.platform-opt i { font-size: 1.3rem; }
+
+.platform-opt.gojek.active      { border-color: #00AA13; background: #e6f9e8; color: #00AA13; }
+.platform-opt.grab.active       { border-color: #00B14F; background: #e6f9ed; color: #00B14F; }
+.platform-opt.maxim.active      { border-color: #FFCC00; background: #fffae6; color: #b38f00; }
+.platform-opt.shopeefood.active { border-color: #EE4D2D; background: #fdeae6; color: #EE4D2D; }
+.platform-opt.lalamove.active   { border-color: #F7A800; background: #fff6e0; color: #b37a00; }
+.platform-opt.indrive.active    { border-color: #1A1A1A; background: #f0f0f0; color: #1A1A1A; }
+
+.platform-opt:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+
+/* ===== SECTION TITLE ===== */
+.section-title {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+/* ===== FORM ROW 2-COL ===== */
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* ===== DIVIDER ===== */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 14px 0;
+}
+
