@@ -1,20 +1,20 @@
 {
   "packageId": "com.ojolkir.app",
-  "host": "ojol-kir.page.gd",
-  "name": "OjolKIR - Manajemen Ojol",
-  "launcherName": "OjolKIR",
+  "host": "muhulilamri.github.io",
+  "name": "DONEFAST Tracer - Manajemen Ojol",
+  "launcherName": "DONEFAST",
   "display": "standalone",
-  "themeColor": "#0F172A",
-  "themeColorDark": "#000000",
-  "navigationColor": "#000000",
-  "navigationColorDark": "#000000",
+  "themeColor": "#EE2737",
+  "themeColorDark": "#8B0000",
+  "navigationColor": "#FFFFFF",
+  "navigationColorDark": "#0A0F1E",
   "navigationDividerColor": "#000000",
   "navigationDividerColorDark": "#000000",
-  "backgroundColor": "#0F172A",
+  "backgroundColor": "#EE2737",
   "enableNotifications": true,
-  "startUrl": "/index.html",
-  "iconUrl": "http://localhost:8080/assets/icons/icon-512.png",
-  "maskableIconUrl": "http://localhost:8080/assets/icons/icon-512.png",
+  "startUrl": "/ojol-kir/index.html",
+  "iconUrl": "https://muhulilamri.github.io/ojol-kir/assets/icons/icon.png",
+  "maskableIconUrl": "https://muhulilamri.github.io/ojol-kir/assets/icons/icon.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "C:\\laragon\\www\\ojol-kir\\android.keystore",
@@ -26,12 +26,12 @@
     {
       "name": "Input Harian",
       "shortName": "Input",
-      "url": "http://localhost:8080/index.html#input",
-      "chosenIconUrl": "http://localhost:8080/assets/icons/icon-192.png"
+      "url": "https://muhulilamri.github.io/ojol-kir/index.html#input",
+      "chosenIconUrl": "https://muhulilamri.github.io/ojol-kir/assets/icons/icon.png"
     }
   ],
   "generatorApp": "bubblewrap-cli",
-  "webManifestUrl": "http://localhost:8080/manifest.json",
+  "webManifestUrl": "https://muhulilamri.github.io/ojol-kir/manifest.json",
   "fallbackType": "customtabs",
   "features": {
     "locationDelegation": {
@@ -44,7 +44,7 @@
   "enableSiteSettingsShortcut": true,
   "isChromeOSOnly": false,
   "isMetaQuest": false,
-  "fullScopeUrl": "http://localhost:8080/",
+  "fullScopeUrl": "https://muhulilamri.github.io/ojol-kir/",
   "minSdkVersion": 21,
   "orientation": "portrait",
   "fingerprints": [],

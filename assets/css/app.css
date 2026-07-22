@@ -82,18 +82,61 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html, body { height: 100%; overflow-x: hidden; }
+html {
+  height: 100%;
+  background: var(--bg-app);
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+  touch-action: manipulation;
+}
 
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
   background: var(--bg-app);
   color: var(--text-primary);
+  width: 100%;
   max-width: 480px;
   margin: 0 auto;
   min-height: 100vh;
   position: relative;
+  overflow-x: hidden;
+  padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: var(--safe-bottom);
   -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Enable text selection inside input/form fields */
+input, textarea, select {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Desktop Web Phone Frame Mockup (Layar > 480px) */
+@media (min-width: 481px) {
+  html {
+    background: #0A0F1E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px 0;
+  }
+  body {
+    border-radius: 40px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 0 0 0 12px #1E2A45, 0 0 0 14px rgba(255, 255, 255, 0.1);
+    height: 92vh;
+    max-height: 900px;
+    overflow-y: auto;
+    position: relative;
+  }
+  #bottomNav {
+    position: sticky;
+    bottom: 0;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+  }
 }
 
 /* ===== HERO BACKGROUND ===== */

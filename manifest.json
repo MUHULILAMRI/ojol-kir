@@ -2,16 +2,17 @@
   "name": "DONEFAST Tracer - Manajemen Ojol",
   "short_name": "DONEFAST",
   "description": "Aplikasi manajemen keuangan dan KIR motor untuk pengemudi ojek online",
-  "start_url": "/index.html",
-  "scope": "/",
-  "display": "fullscreen",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone", "minimal-ui"],
   "orientation": "portrait",
-  "background_color": "#1a0000",
-  "theme_color": "#1a0000",
+  "background_color": "#8B0000",
+  "theme_color": "#EE2737",
   "categories": ["finance", "productivity"],
   "icons": [
     {
-      "src": "/assets/icons/icon.png",
+      "src": "assets/icons/icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -22,8 +23,8 @@
       "name": "Input Harian",
       "short_name": "Input",
       "description": "Catat pendapatan hari ini",
-      "url": "/index.html#input",
-      "icons": [{ "src": "/assets/icons/icon.png", "sizes": "512x512", "type": "image/png" }]
+      "url": "./index.html#input",
+      "icons": [{ "src": "assets/icons/icon.png", "sizes": "512x512", "type": "image/png" }]
     }
   ]
 }

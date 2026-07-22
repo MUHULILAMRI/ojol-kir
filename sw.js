@@ -1,24 +1,25 @@
 // =============================================
-// OjolKIR - Service Worker (PWA Offline)
+// OjolKIR - Service Worker (PWA Offline) v5
 // =============================================
 
-const CACHE = 'donefast-v4';
+const CACHE = 'donefast-v5';
 const STATIC = [
-  '/',
-  '/index.html',
-  '/assets/css/app.css',
-  '/assets/js/app.js',
-  '/assets/js/dashboard.js',
-  '/assets/js/input.js',
-  '/assets/js/riwayat.js',
-  '/assets/js/analitik.js',
-  '/assets/icons/icon.svg',
-  '/assets/img/qris.jpg',
+  './',
+  './index.html',
+  './manifest.json',
+  './assets/css/app.css',
+  './assets/js/app.js',
+  './assets/js/dashboard.js',
+  './assets/js/input.js',
+  './assets/js/riwayat.js',
+  './assets/js/analitik.js',
+  './assets/icons/icon.svg',
+  './assets/icons/icon.png',
   'https://cdn.jsdelivr.net/npm/chart.js',
   'https://unpkg.com/@phosphor-icons/web'
 ];
 
-// Install: cache semua file statis
+// Install: cache file statis
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE).then(c => c.addAll(STATIC)).then(() => self.skipWaiting())
@@ -34,23 +35,23 @@ self.addEventListener('activate', e => {
   );
 });
 
-// Fetch: cache-first untuk statis, network-first untuk API
+// Fetch: Network-first untuk HTML/manifest, Cache-first untuk aset statis
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
 
-  // API calls: always network, fallback ke error JSON
-  if (url.pathname.includes('/api/')) {
+  // Network-first untuk HTML & Manifest agar update PWA fullscreen cepat masuk
+  if (e.request.mode === 'navigate' || url.pathname.endsWith('manifest.json') || url.pathname.endsWith('index.html')) {
     e.respondWith(
-      fetch(e.request).catch(() =>
-        new Response(JSON.stringify({ status: 'error', message: 'Offline: tidak ada koneksi' }), {
-          headers: { 'Content-Type': 'application/json' }
-        })
-      )
+      fetch(e.request).then(res => {
+        const clone = res.clone();
+        caches.open(CACHE).then(c => c.put(e.request, clone));
+        return res;
+      }).catch(() => caches.match(e.request))
     );
     return;
   }
 
-  // Statis: cache-first
+  // Statis & Gambar: cache-first dengan fallback network
   e.respondWith(
     caches.match(e.request).then(cached => {
       if (cached) return cached;

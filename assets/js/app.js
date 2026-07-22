@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Service Worker
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
+    navigator.serviceWorker.register('sw.js').catch(() => {});
   }
 
   // Header buttons haptic feedback (subtle scale)

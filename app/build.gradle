@@ -23,28 +23,20 @@ plugins {
 def twaManifest = [
     applicationId: 'com.ojolkir.app',
     hostName: 'muhulilamri.github.io', // The domain being opened in the TWA.
-    launchUrl: '/index.html', // The start path for the TWA. Must be relative to the domain.
+    launchUrl: '/ojol-kir/index.html', // The start path for the TWA. Must be relative to the domain.
     name: 'DONEFAST Tracer - Manajemen Ojol', // The application name.
     launcherName: 'DONEFAST', // The name shown on the Android Launcher.
-    themeColor: '#1a0000', // The color used for the status bar.
-    themeColorDark: '#000000', // The color used for the dark status bar.
-    navigationColor: '#000000', // The color used for the navigation bar.
-    navigationColorDark: '#000000', // The color used for the dark navbar.
+    themeColor: '#EE2737', // The color used for the status bar.
+    themeColorDark: '#8B0000', // The color used for the dark status bar.
+    navigationColor: '#FFFFFF', // The color used for the navigation bar.
+    navigationColorDark: '#0A0F1E', // The color used for the dark navbar.
     navigationDividerColor: '#000000', // The navbar divider color.
     navigationDividerColorDark: '#000000', // The dark navbar divider color.
-    backgroundColor: '#1a0000', // The color used for the splash screen background.
+    backgroundColor: '#EE2737', // The color used for the splash screen background.
     enableNotifications: true, // Set to true to enable notification delegation.
-    // Every shortcut must include the following fields:
-    // - name: String that will show up in the shortcut.
-    // - short_name: Shorter string used if |name| is too long.
-    // - url: Absolute path of the URL to launch the app with (e.g '/create').
-    // - icon: Name of the resource in the drawable folder to use as an icon.
-    shortcuts: [[name:'Input Harian', short_name:'Input', url:'http://localhost:8080/index.html#input', icon:'shortcut_0']],
-    // The duration of fade out animation in milliseconds to be played when removing splash screen.
+    shortcuts: [[name:'Input Harian', short_name:'Input', url:'https://muhulilamri.github.io/ojol-kir/index.html#input', icon:'shortcut_0']],
     splashScreenFadeOutDuration: 300,
     generatorApp: 'bubblewrap-cli', // Application that generated the Android Project
-    // The fallback strategy for when Trusted Web Activity is not available. Possible values are
-    // 'customtabs' and 'webview'.
     fallbackType: 'customtabs',
     enableSiteSettingsShortcut: 'true',
     orientation: 'portrait',
@@ -70,18 +62,8 @@ android {
         def launchUrl = "https://" + twaManifest.hostName + twaManifest.launchUrl
         resValue "string", "launchUrl", launchUrl
 
-        
-
-        
-            // The URL the Web Manifest for the Progressive Web App that the TWA points to. This
-            // is used by Chrome OS and Meta Quest to open the Web version of the PWA instead of
-            // the TWA, as it will probably give a better user experience for non-mobile devices.
-            resValue "string", "webManifestUrl", 'http://localhost:8080/manifest.json'
-        
-
-        
-            // This is used by Meta Quest.
-            resValue "string", "fullScopeUrl", 'http://localhost:8080/'
+        resValue "string", "webManifestUrl", 'https://muhulilamri.github.io/ojol-kir/manifest.json'
+        resValue "string", "fullScopeUrl", 'https://muhulilamri.github.io/ojol-kir/'
         
 
         
