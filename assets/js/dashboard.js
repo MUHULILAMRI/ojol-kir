@@ -76,11 +76,27 @@ function renderDashboard(data) {
   if (aveEl)  animateNumber(aveEl, avg, v => formatRp(v));
   if (projEl) animateNumber(projEl, proyeksi, v => formatRp(v));
 
-  // Chart
-  renderMiniChart(data.chart_7hari || []);
+  // Target Harian
+  updateTargetHarianUI(data);
 
   // Maintenance
   updateMaintenanceUI();
+}
+
+function updateTargetHarianUI(data) {
+  const targetHarian = parseFloat(localStorage.getItem('ojolkir_target_harian')) || 200000;
+  const db = getDb();
+  const todayStr = new Date().toISOString().split('T')[0];
+  const todayEntries = db.filter(d => d.tanggal === todayStr);
+  const todayIncome = todayEntries.reduce((s, x) => s + (Number(x.pendapatan_kotor) || 0), 0);
+
+  const pct = Math.min(100, Math.round((todayIncome / targetHarian) * 100));
+
+  const txtEl  = document.getElementById('targetProgressTxt');
+  const fillEl = document.getElementById('targetBarFill');
+
+  if (txtEl)  txtEl.textContent  = `${formatRp(todayIncome)} / ${formatRp(targetHarian)} (${pct}%)`;
+  if (fillEl) fillEl.style.width = pct + '%';
 }
 
 // ===== ANIMATED NUMBER COUNT UP =====
@@ -167,7 +183,7 @@ function updateMaintenanceUI() {
   const odoEl      = document.getElementById('modalOdoCurrent');
   if (odoEl) odoEl.textContent = currentOdo.toFixed(1) + ' KM';
 
-  const limits = {
+  const limits = (typeof getCustomLimits === 'function') ? getCustomLimits() : {
     'oli_mesin':  2000,
     'oli_gardan': 8000,
     'servis_cvt': 4000

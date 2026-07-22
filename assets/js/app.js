@@ -281,22 +281,281 @@ function installApp() {
   });
 }
 
-// ===== NETWORK STATUS (bug fix: gunakan id="netDot") =====
-function updateNet() {
-  const dot = document.getElementById('netDot');   // fix: pakai id bukan class
-  const txt = document.getElementById('netTxt');
-  if (dot && txt) {
-    if (navigator.onLine) {
-      dot.style.background = '#4ADE80';
-      txt.textContent = 'Online';
-    } else {
-      dot.style.background = '#F59E0B';
-      txt.textContent = 'Offline';
-    }
+// ===== ONBOARDING & PROFILE MANAGEMENT =====
+let selectedPlatformProfile = 'gojek';
+let selectedPlatformOnboarding = 'gojek';
+
+function selectPlatform(el) {
+  document.querySelectorAll('#profilePlatformGrid .platform-opt').forEach(opt => opt.classList.remove('active'));
+  el.classList.add('active');
+  selectedPlatformProfile = el.dataset.platform || 'gojek';
+}
+
+function selectPlatformOnboarding(el) {
+  document.querySelectorAll('#onboardingPlatformGrid .platform-opt').forEach(opt => opt.classList.remove('active'));
+  el.classList.add('active');
+  selectedPlatformOnboarding = el.dataset.platform || 'gojek';
+}
+
+function checkOnboarding() {
+  const isComplete = localStorage.getItem('ojolkir_profile_complete');
+  if (!isComplete) {
+    const obModal = document.getElementById('onboardingModal');
+    if (obModal) obModal.classList.add('active');
+  } else {
+    loadProfile();
   }
 }
-window.addEventListener('online',  updateNet);
-window.addEventListener('offline', () => { updateNet(); showToast('Koneksi terputus', 'warning'); });
+
+function completeOnboarding() {
+  const name   = document.getElementById('obName')?.value.trim() || 'Muh. Ulil Amri';
+  const motor  = document.getElementById('obMotor')?.value.trim() || 'Honda Vario 150';
+  const target = parseFloat(document.getElementById('obTarget')?.value) || 200000;
+
+  localStorage.setItem('ojolkir_user_name', name);
+  localStorage.setItem('ojolkir_user_motor', motor);
+  localStorage.setItem('ojolkir_platform', selectedPlatformOnboarding);
+  localStorage.setItem('ojolkir_target_harian', target);
+  localStorage.setItem('ojolkir_profile_complete', '1');
+
+  const obModal = document.getElementById('onboardingModal');
+  if (obModal) obModal.classList.remove('active');
+
+  loadProfile();
+  showToast(`Selamat datang Bang ${name}! Siap narik harian. 🚀`, 'success', 4000);
+  requestNotificationPermission();
+}
+
+function openProfileModal() {
+  const name   = localStorage.getItem('ojolkir_user_name') || 'Muh. Ulil Amri';
+  const motor  = localStorage.getItem('ojolkir_user_motor') || 'Honda Vario 150';
+  const plat   = localStorage.getItem('ojolkir_platform') || 'gojek';
+  const target = localStorage.getItem('ojolkir_target_harian') || '200000';
+
+  const limits = getCustomLimits();
+
+  if (document.getElementById('inputProfileName'))   document.getElementById('inputProfileName').value   = name;
+  if (document.getElementById('inputProfileMotor'))  document.getElementById('inputProfileMotor').value  = motor;
+  if (document.getElementById('inputProfileTarget')) document.getElementById('inputProfileTarget').value = target;
+
+  if (document.getElementById('limitOliMesin'))  document.getElementById('limitOliMesin').value  = limits.oli_mesin;
+  if (document.getElementById('limitOliGardan')) document.getElementById('limitOliGardan').value = limits.oli_gardan;
+  if (document.getElementById('limitServisCvt'))  document.getElementById('limitServisCvt').value  = limits.servis_cvt;
+
+  selectedPlatformProfile = plat;
+  document.querySelectorAll('#profilePlatformGrid .platform-opt').forEach(opt => {
+    if (opt.dataset.platform === plat) opt.classList.add('active');
+    else opt.classList.remove('active');
+  });
+
+  const modal = document.getElementById('profileModal');
+  if (modal) modal.classList.add('active');
+}
+
+function saveProfile() {
+  const name   = document.getElementById('inputProfileName')?.value.trim() || 'Muh. Ulil Amri';
+  const motor  = document.getElementById('inputProfileMotor')?.value.trim() || 'Honda Vario 150';
+  const target = parseFloat(document.getElementById('inputProfileTarget')?.value) || 200000;
+
+  const oliMesin  = parseFloat(document.getElementById('limitOliMesin')?.value)  || 2000;
+  const oliGardan = parseFloat(document.getElementById('limitOliGardan')?.value) || 8000;
+  const servisCvt = parseFloat(document.getElementById('limitServisCvt')?.value)  || 4000;
+
+  localStorage.setItem('ojolkir_user_name', name);
+  localStorage.setItem('ojolkir_user_motor', motor);
+  localStorage.setItem('ojolkir_platform', selectedPlatformProfile);
+  localStorage.setItem('ojolkir_target_harian', target);
+
+  const customLimits = { oli_mesin: oliMesin, oli_gardan: oliGardan, servis_cvt: servisCvt };
+  localStorage.setItem('ojolkir_custom_limits', JSON.stringify(customLimits));
+
+  closeModals();
+  loadProfile();
+  if (typeof loadDashboard === 'function') loadDashboard();
+  showToast('Pengaturan profil & servis berhasil disimpan! ✓', 'success');
+}
+
+function getCustomLimits() {
+  const defaults = { oli_mesin: 2000, oli_gardan: 8000, servis_cvt: 4000 };
+  try {
+    const saved = JSON.parse(localStorage.getItem('ojolkir_custom_limits'));
+    return { ...defaults, ...saved };
+  } catch (e) {
+    return defaults;
+  }
+}
+
+function loadProfile() {
+  const name  = localStorage.getItem('ojolkir_user_name') || 'Muh. Ulil Amri';
+  const motor = localStorage.getItem('ojolkir_user_motor') || 'Honda Vario 150';
+  const plat  = localStorage.getItem('ojolkir_platform') || 'gojek';
+
+  const nameEl  = document.getElementById('userName');
+  const motorEl = document.getElementById('userMotor');
+  const badgeEl = document.getElementById('userPlatformBadge');
+
+  if (nameEl)  nameEl.textContent  = name;
+  if (motorEl) motorEl.textContent = motor;
+
+  if (badgeEl) {
+    badgeEl.textContent = plat.toUpperCase();
+    badgeEl.className = 'platform-badge ' + plat;
+  }
+}
+
+function closeModals() {
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    if (m.id !== 'onboardingModal') m.classList.remove('active');
+  });
+}
+
+// ===== SYSTEM POP-UP NOTIFICATIONS =====
+function requestNotificationPermission() {
+  if (!('Notification' in window)) return showToast('Browser tidak mendukung notifikasi sistem', 'info');
+  if (Notification.permission === 'granted') return showToast('Izin notifikasi sudah aktif! ✓', 'success');
+
+  Notification.requestPermission().then(permission => {
+    if (permission === 'granted') {
+      showToast('Notifikasi sistem berhasil diaktifkan! 🔔', 'success');
+      sendSystemNotification('DONEFAST Tracer', {
+        body: 'Notifikasi sistem aktif! Kami akan mengingatkan jadwal servis dan input harian.',
+        icon: 'assets/icons/icon.png'
+      });
+    } else {
+      showToast('Izin notifikasi ditolak', 'warning');
+    }
+  });
+}
+
+function sendSystemNotification(title, options = {}) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  try {
+    if (navigator.serviceWorker && navigator.serviceWorker.ready) {
+      navigator.serviceWorker.ready.then(reg => {
+        reg.showNotification(title, {
+          icon: 'assets/icons/icon.png',
+          badge: 'assets/icons/icon.png',
+          vibrate: [200, 100, 200],
+          ...options
+        });
+      });
+    } else {
+      new Notification(title, { icon: 'assets/icons/icon.png', ...options });
+    }
+  } catch (e) {
+    console.error('System Notification Error:', e);
+  }
+}
+
+// ===== LIVE GPS TRACKING ENGINE =====
+let gpsWatchId = null;
+let lastGpsCoords = null;
+
+function toggleGpsTracking() {
+  if (gpsWatchId !== null) {
+    stopGpsTracking();
+  } else {
+    startGpsTracking();
+  }
+}
+
+function startGpsTracking() {
+  if (!('geolocation' in navigator)) {
+    return showToast('GPS Geolocation tidak didukung browser ini', 'error');
+  }
+
+  const btn   = document.getElementById('btnToggleGps');
+  const title = document.getElementById('gpsStatusTitle');
+  const sub   = document.getElementById('gpsStatusSub');
+
+  if (title) title.textContent = 'Mencari Sinyal GPS...';
+  if (sub)   sub.textContent   = 'Mohon tunggu sinyal terdeteksi';
+  if (btn)   btn.textContent   = 'Matikan';
+
+  gpsWatchId = navigator.geolocation.watchPosition(
+    pos => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+
+      if (lastGpsCoords) {
+        const distKm = calculateDistance(lastGpsCoords.lat, lastGpsCoords.lng, lat, lng);
+        if (distKm > 0.02) { // minimal 20 meter movement
+          addGpsDistanceToToday(distKm);
+        }
+      }
+
+      lastGpsCoords = { lat, lng };
+
+      if (title) title.textContent = 'GPS Tracking Aktif 🟢';
+      if (sub)   sub.textContent   = 'Menghitung jarak Odometer real-time';
+      if (btn)   btn.textContent   = 'Matikan';
+
+      sendSystemNotification('DONEFAST GPS Active', {
+        body: 'Aplikasi sedang berjalan — Melacak jarak tempuh narik real-time.',
+        tag: 'gps-active',
+        silent: true
+      });
+    },
+    err => {
+      showToast('Gagal mengakses GPS: ' + err.message, 'warning');
+      stopGpsTracking();
+    },
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 5000 }
+  );
+
+  showToast('GPS Tracking Berhasil Diaktifkan! 📍', 'success');
+}
+
+function stopGpsTracking() {
+  if (gpsWatchId !== null) {
+    navigator.geolocation.clearWatch(gpsWatchId);
+    gpsWatchId = null;
+  }
+  lastGpsCoords = null;
+
+  const btn   = document.getElementById('btnToggleGps');
+  const title = document.getElementById('gpsStatusTitle');
+  const sub   = document.getElementById('gpsStatusSub');
+
+  if (title) title.textContent = 'GPS Tracker Off';
+  if (sub)   sub.textContent   = 'Klik untuk lacak jarak tempuh real-time';
+  if (btn)   btn.textContent   = 'Aktifkan';
+
+  showToast('GPS Tracking Dimatikan', 'info');
+}
+
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius bumi KM
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
+
+function addGpsDistanceToToday(addKm) {
+  let db = getDb();
+  const todayStr = new Date().toISOString().split('T')[0];
+  let todayItem  = db.find(d => d.tanggal === todayStr);
+
+  if (todayItem) {
+    todayItem.jarak_tempuh_km = (parseFloat(todayItem.jarak_tempuh_km) || 0) + addKm;
+  } else {
+    db.push({
+      id: Date.now(),
+      tanggal: todayStr,
+      pendapatan_kotor: 0,
+      pengeluaran_bensin: 0,
+      pengeluaran_lain: 0,
+      jarak_tempuh_km: addKm
+    });
+  }
+
+  saveDb(db);
+  if (typeof loadDashboard === 'function') loadDashboard();
+}
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -310,7 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   }
 
-  // Header buttons haptic feedback (subtle scale)
+  // Header buttons haptic feedback
   document.querySelectorAll('#btnInfo, #btnSettings').forEach(btn => {
     btn.addEventListener('click', () => {
       btn.style.transform = 'scale(0.92)';
@@ -320,5 +579,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateNet();
   initRipples();
+  checkOnboarding();
   navigateTo('dashboard');
 });

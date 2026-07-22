@@ -68,7 +68,10 @@
       <div class="greeting-text">
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <div>
-            <h2 id="userName" style="font-size:1.35rem;font-weight:900;color:#fff;letter-spacing:-0.3px;outline:none" title="Nama">Muh. Ulil Amri</h2>
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+              <h2 id="userName" style="font-size:1.35rem;font-weight:900;color:#fff;letter-spacing:-0.3px;outline:none" title="Nama">Muh. Ulil Amri</h2>
+              <span id="userPlatformBadge" class="platform-badge gojek">Gojek</span>
+            </div>
             <div style="display:flex;align-items:center;gap:5px;margin-top:3px;">
               <i class="ph-fill ph-motorcycle" style="font-size:0.82rem;color:rgba(255,255,255,.85)"></i>
               <span id="userMotor" style="font-size:.78rem;color:rgba(255,255,255,0.85);font-weight:600;outline:none" title="Jenis motor">Honda Vario 150</span>
@@ -84,6 +87,31 @@
             </button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- GPS Live Tracking Banner (Interactive) -->
+    <div class="gps-banner" id="gpsBanner">
+      <div class="gps-banner-info">
+        <div class="gps-dot-pulse" id="gpsDot"></div>
+        <div class="gps-banner-text">
+          <h5 id="gpsStatusTitle">GPS Tracker Off</h5>
+          <p id="gpsStatusSub">Klik untuk lacak jarak tempuh real-time</p>
+        </div>
+      </div>
+      <button class="btn btn-sm" id="btnToggleGps" onclick="toggleGpsTracking()" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.2);padding:4px 10px;font-size:0.68rem;border-radius:8px;">
+        Aktifkan
+      </button>
+    </div>
+
+    <!-- Target Harian Widget -->
+    <div class="target-widget">
+      <div class="target-head">
+        <span class="target-title"><i class="ph-bold ph-target" style="color:var(--success);margin-right:4px;"></i> Target Harian Hari Ini</span>
+        <span class="target-val" id="targetProgressTxt">Rp 0 / Rp 200.000 (0%)</span>
+      </div>
+      <div class="target-bar-wrap">
+        <div class="target-bar-fill" id="targetBarFill" style="width: 0%;"></div>
       </div>
     </div>
 
@@ -395,29 +423,142 @@
 
 <!-- ===== MODALS ===== -->
 
-<!-- Modal Profile -->
+<!-- Modal Profile & Settings -->
 <div class="modal-overlay" id="profileModal" onclick="if(event.target===this) closeModals()">
   <div class="modal-content">
     <div class="modal-header">
-      <h3>Pengaturan Profil</h3>
+      <h3>Pengaturan Profil & Servis</h3>
       <button class="modal-close" onclick="closeModals()" aria-label="Tutup">&times;</button>
     </div>
     <div class="modal-body">
       <div class="form-group">
-        <label class="form-lbl" for="inputProfileName"><i class="ph-bold ph-user"></i> Nama Pengemudi</label>
-        <input type="text" class="form-ctrl" id="inputProfileName">
+        <label class="form-lbl"><i class="ph-bold ph-sketch-logo"></i> Platform Ojol / Mitra</label>
+        <div class="platform-grid" id="profilePlatformGrid">
+          <div class="platform-opt gojek" data-platform="gojek" onclick="selectPlatform(this)">
+            <i class="ph-bold ph-motorcycle"></i><span>Gojek</span>
+          </div>
+          <div class="platform-opt grab" data-platform="grab" onclick="selectPlatform(this)">
+            <i class="ph-bold ph-path"></i><span>Grab</span>
+          </div>
+          <div class="platform-opt maxim" data-platform="maxim" onclick="selectPlatform(this)">
+            <i class="ph-bold ph-taxi"></i><span>Maxim</span>
+          </div>
+          <div class="platform-opt shopeefood" data-platform="shopeefood" onclick="selectPlatform(this)">
+            <i class="ph-bold ph-shopping-bag"></i><span>Shopee</span>
+          </div>
+          <div class="platform-opt lalamove" data-platform="lalamove" onclick="selectPlatform(this)">
+            <i class="ph-bold ph-truck"></i><span>Lalamove</span>
+          </div>
+          <div class="platform-opt indrive" data-platform="indrive" onclick="selectPlatform(this)">
+            <i class="ph-bold ph-lightning"></i><span>InDrive</span>
+          </div>
+        </div>
       </div>
+
+      <div class="form-group">
+        <label class="form-lbl" for="inputProfileName"><i class="ph-bold ph-user"></i> Nama Pengemudi</label>
+        <input type="text" class="form-ctrl" id="inputProfileName" placeholder="Contoh: Muh. Ulil Amri">
+      </div>
+
       <div class="form-group">
         <label class="form-lbl" for="inputProfileMotor"><i class="ph-bold ph-motorcycle"></i> Jenis Motor</label>
-        <input type="text" class="form-ctrl" id="inputProfileMotor">
+        <input type="text" class="form-ctrl" id="inputProfileMotor" placeholder="Contoh: Honda Vario 150">
       </div>
+
       <div class="form-group">
-        <label class="form-lbl" for="inputProfileOdo"><i class="ph-bold ph-speedometer"></i> Odometer Awal (KM)</label>
-        <div style="font-size:0.68rem; color:var(--text-muted); margin-bottom:7px;">Isi jika odometer di speedometer tidak dari nol.</div>
-        <input type="number" class="form-ctrl" id="inputProfileOdo" inputmode="numeric">
+        <label class="form-lbl" for="inputProfileTarget"><i class="ph-bold ph-target"></i> Target Pendapatan Harian (Rp)</label>
+        <input type="number" class="form-ctrl" id="inputProfileTarget" placeholder="200000" inputmode="numeric">
       </div>
-      <button class="btn btn-primary btn-block btn-lg" style="margin-top:8px;" onclick="saveProfile()">
-        <i class="ph-bold ph-check"></i> Simpan Profil
+
+      <div class="divider"></div>
+      <span class="section-title"><i class="ph-bold ph-wrench"></i> Setting Batas Servis (KM)</span>
+      <div style="font-size:0.68rem; color:var(--text-muted); margin:4px 0 10px;">Sesuaikan jadwal ganti berdasarkan standar motor Anda.</div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-lbl">Oli Mesin (KM)</label>
+          <input type="number" class="form-ctrl" id="limitOliMesin" value="2000" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Oli Gardan (KM)</label>
+          <input type="number" class="form-ctrl" id="limitOliGardan" value="8000" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-lbl">Servis CVT (KM)</label>
+          <input type="number" class="form-ctrl" id="limitServisCvt" value="4000" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">Notifikasi Sistem</label>
+          <button class="btn btn-sm btn-outline btn-block" onclick="requestNotificationPermission()" style="margin-top:2px;">
+            <i class="ph-bold ph-bell"></i> Izin Notif
+          </button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block btn-lg" style="margin-top:12px;" onclick="saveProfile()">
+        <i class="ph-bold ph-check"></i> Simpan Pengaturan
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Onboarding (Pengguna Baru) -->
+<div class="modal-overlay" id="onboardingModal">
+  <div class="modal-content">
+    <div class="modal-header" style="justify-content:center;">
+      <h3 style="font-size:1.15rem;font-weight:900;">Selamat Datang di DONEFAST! 🚀</h3>
+    </div>
+    <div class="modal-body onboarding-card">
+      <div class="onboarding-icon-circle">
+        <i class="ph-bold ph-motorcycle"></i>
+      </div>
+      <h4 style="font-size:1.1rem;font-weight:900;color:var(--text-primary);margin-bottom:4px;">Atur Profil Driver Anda</h4>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;">Pilih platform ojol & jenis motor untuk memulai manajemen keuangan dan pelacakan servis.</p>
+
+      <div class="form-group" style="text-align:left;">
+        <label class="form-lbl"><i class="ph-bold ph-sketch-logo"></i> Pilih Platform Ojol Utama</label>
+        <div class="platform-grid" id="onboardingPlatformGrid">
+          <div class="platform-opt gojek active" data-platform="gojek" onclick="selectPlatformOnboarding(this)">
+            <i class="ph-bold ph-motorcycle"></i><span>Gojek</span>
+          </div>
+          <div class="platform-opt grab" data-platform="grab" onclick="selectPlatformOnboarding(this)">
+            <i class="ph-bold ph-path"></i><span>Grab</span>
+          </div>
+          <div class="platform-opt maxim" data-platform="maxim" onclick="selectPlatformOnboarding(this)">
+            <i class="ph-bold ph-taxi"></i><span>Maxim</span>
+          </div>
+          <div class="platform-opt shopeefood" data-platform="shopeefood" onclick="selectPlatformOnboarding(this)">
+            <i class="ph-bold ph-shopping-bag"></i><span>Shopee</span>
+          </div>
+          <div class="platform-opt lalamove" data-platform="lalamove" onclick="selectPlatformOnboarding(this)">
+            <i class="ph-bold ph-truck"></i><span>Lalamove</span>
+          </div>
+          <div class="platform-opt indrive" data-platform="indrive" onclick="selectPlatformOnboarding(this)">
+            <i class="ph-bold ph-lightning"></i><span>InDrive</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" style="text-align:left;">
+        <label class="form-lbl" for="obName"><i class="ph-bold ph-user"></i> Nama Lengkap Driver</label>
+        <input type="text" class="form-ctrl" id="obName" placeholder="Contoh: Muh. Ulil Amri">
+      </div>
+
+      <div class="form-group" style="text-align:left;">
+        <label class="form-lbl" for="obMotor"><i class="ph-bold ph-motorcycle"></i> Jenis Motor</label>
+        <input type="text" class="form-ctrl" id="obMotor" placeholder="Contoh: Honda Vario 150 / Yamaha NMAX">
+      </div>
+
+      <div class="form-group" style="text-align:left;">
+        <label class="form-lbl" for="obTarget"><i class="ph-bold ph-target"></i> Target Pendapatan / Hari (Rp)</label>
+        <input type="number" class="form-ctrl" id="obTarget" value="200000" inputmode="numeric">
+      </div>
+
+      <button class="btn btn-primary btn-block btn-lg" style="margin-top:16px;" onclick="completeOnboarding()">
+        Mulai Nambang! <i class="ph-bold ph-arrow-right"></i>
       </button>
     </div>
   </div>
