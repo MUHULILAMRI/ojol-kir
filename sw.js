@@ -1,8 +1,8 @@
 // =============================================
-// OjolKIR - Service Worker (PWA Offline) v5
+// OjolKIR - Service Worker (PWA Offline) v7
 // =============================================
 
-const CACHE = 'donefast-v5';
+const CACHE = 'donefast-v7';
 const STATIC = [
   './',
   './index.html',
