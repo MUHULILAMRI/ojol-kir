@@ -327,16 +327,18 @@ function completeOnboarding() {
 }
 
 function openProfileModal() {
-  const name   = localStorage.getItem('ojolkir_user_name') || 'Muh. Ulil Amri';
-  const motor  = localStorage.getItem('ojolkir_user_motor') || 'Honda Vario 150';
+  const name   = localStorage.getItem('ojolkir_user_name') || localStorage.getItem('ojolkir_name') || 'Muh. Ulil Amri';
+  const motor  = localStorage.getItem('ojolkir_user_motor') || localStorage.getItem('ojolkir_motor') || 'Honda Vario 150';
   const plat   = localStorage.getItem('ojolkir_platform') || 'gojek';
   const target = localStorage.getItem('ojolkir_target_harian') || '200000';
+  const odo    = localStorage.getItem('ojolkir_odo_awal') || '0';
 
   const limits = getCustomLimits();
 
   if (document.getElementById('inputProfileName'))   document.getElementById('inputProfileName').value   = name;
   if (document.getElementById('inputProfileMotor'))  document.getElementById('inputProfileMotor').value  = motor;
   if (document.getElementById('inputProfileTarget')) document.getElementById('inputProfileTarget').value = target;
+  if (document.getElementById('inputProfileOdo'))    document.getElementById('inputProfileOdo').value    = odo;
 
   if (document.getElementById('limitOliMesin'))  document.getElementById('limitOliMesin').value  = limits.oli_mesin;
   if (document.getElementById('limitOliGardan')) document.getElementById('limitOliGardan').value = limits.oli_gardan;
@@ -356,15 +358,19 @@ function saveProfile() {
   const name   = document.getElementById('inputProfileName')?.value.trim() || 'Muh. Ulil Amri';
   const motor  = document.getElementById('inputProfileMotor')?.value.trim() || 'Honda Vario 150';
   const target = parseFloat(document.getElementById('inputProfileTarget')?.value) || 200000;
+  const odo    = parseFloat(document.getElementById('inputProfileOdo')?.value) || 0;
 
   const oliMesin  = parseFloat(document.getElementById('limitOliMesin')?.value)  || 2000;
   const oliGardan = parseFloat(document.getElementById('limitOliGardan')?.value) || 8000;
   const servisCvt = parseFloat(document.getElementById('limitServisCvt')?.value)  || 4000;
 
   localStorage.setItem('ojolkir_user_name', name);
+  localStorage.setItem('ojolkir_name', name);
   localStorage.setItem('ojolkir_user_motor', motor);
+  localStorage.setItem('ojolkir_motor', motor);
   localStorage.setItem('ojolkir_platform', selectedPlatformProfile);
   localStorage.setItem('ojolkir_target_harian', target);
+  localStorage.setItem('ojolkir_odo_awal', odo);
 
   const customLimits = { oli_mesin: oliMesin, oli_gardan: oliGardan, servis_cvt: servisCvt };
   localStorage.setItem('ojolkir_custom_limits', JSON.stringify(customLimits));
@@ -372,7 +378,7 @@ function saveProfile() {
   closeModals();
   loadProfile();
   if (typeof loadDashboard === 'function') loadDashboard();
-  showToast('Pengaturan profil & servis berhasil disimpan! ✓', 'success');
+  showToast('Pengaturan profil, target & servis berhasil disimpan! ✓', 'success');
 }
 
 function getCustomLimits() {

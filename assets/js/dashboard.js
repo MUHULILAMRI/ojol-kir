@@ -258,47 +258,14 @@ function resetService(type) {
   updateMaintenanceUI();
 }
 
-// ===== MODALS & PROFILE =====
-function openProfileModal() {
-  document.getElementById('inputProfileName').value  = localStorage.getItem('ojolkir_name')    || 'Muh. Ulil Amri';
-  document.getElementById('inputProfileMotor').value = localStorage.getItem('ojolkir_motor')   || 'Honda Vario 150';
-  document.getElementById('inputProfileOdo').value   = localStorage.getItem('ojolkir_odo_awal') || '0';
-  document.getElementById('profileModal').classList.add('active');
-}
-
+// ===== MODALS =====
 function openServiceModal() {
   updateMaintenanceUI();
-  document.getElementById('serviceModal').classList.add('active');
+  const m = document.getElementById('serviceModal');
+  if (m) m.classList.add('active');
 }
 
 function openInfoModal() {
-  document.getElementById('infoModal').classList.add('active');
+  const m = document.getElementById('infoModal');
+  if (m) m.classList.add('active');
 }
-
-function closeModals() {
-  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
-}
-
-function saveProfile() {
-  const name  = document.getElementById('inputProfileName').value.trim();
-  const motor = document.getElementById('inputProfileMotor').value.trim();
-  const odo   = document.getElementById('inputProfileOdo').value.trim() || '0';
-
-  if (name)  localStorage.setItem('ojolkir_name',    name);
-  if (motor) localStorage.setItem('ojolkir_motor',   motor);
-  localStorage.setItem('ojolkir_odo_awal', odo);
-
-  initProfileUI();
-  closeModals();
-  updateMaintenanceUI();
-  showToast('Profil & Odometer berhasil disimpan! ✓', 'success');
-}
-
-function initProfileUI() {
-  const nameEl  = document.getElementById('userName');
-  const motorEl = document.getElementById('userMotor');
-  if (nameEl)  nameEl.textContent  = localStorage.getItem('ojolkir_name')  || 'Muh. Ulil Amri';
-  if (motorEl) motorEl.textContent = localStorage.getItem('ojolkir_motor') || 'Honda Vario 150';
-}
-
-document.addEventListener('DOMContentLoaded', initProfileUI);
